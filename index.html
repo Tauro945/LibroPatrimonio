@@ -245,6 +245,22 @@
   .wm-badge.op{ background:var(--sage-soft); color:var(--sage); }
   .wm-badge.nonop{ background:var(--parchment-dim); color:var(--ink-soft); }
   .wm-name{ flex:1; font-size:13.5px; font-weight:500; }
+  .wm-multi{ display:flex; align-items:baseline; justify-content:flex-end; gap:4px 14px; font-size:13px; white-space:nowrap; color:var(--ink-soft); }
+  .wm-multi b{ font-size:12px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; margin-right:5px; color:var(--ink-soft); }
+  .wm-multi .wm-tot{ padding-left:14px; border-left:1px solid var(--line-strong); font-weight:600; }
+  .wm-row.wm-has-multi{ flex-wrap:nowrap; }
+  .wm-multi{ flex-shrink:0; }
+  .wm-tot-btn{ background:none; border:none; font:inherit; color:inherit; cursor:pointer; padding:2px 6px; margin:-2px -6px; border-radius:6px; white-space:nowrap; }
+  .wm-tot-btn:hover{ background:var(--parchment-dim); }
+  .wm-tot-btn .caret{ margin-left:4px; }
+  @media (max-width:860px){
+    .wm-row.wm-has-multi{ gap:6px; }
+    .wm-row.wm-has-multi .wm-badge{ width:68px; font-size:10.5px; padding:3px 4px; letter-spacing:0; }
+    .wm-name{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .wm-multi{ gap:4px 8px; font-size:11.5px; }
+    .wm-multi b{ margin-right:3px; font-size:10px; letter-spacing:0; }
+    .wm-multi .wm-tot{ padding-left:8px; }
+  }
   .wm-amt{ font-size:13.5px; min-width:150px; text-align:right; color:var(--ink-soft); }
   .wm-amt.gain-pos{ color:var(--sage); }
   .wm-amt.gain-neg{ color:var(--brick); }
@@ -358,37 +374,6 @@
     font-family:'Inter',sans-serif; font-size:13px; padding:6px 9px; border:1px solid var(--line-strong);
     border-radius:6px; background:#fff; width:150px;
   }
-  /* ---------- ETF: una riga per ETF, sezioni per classe ----------
-     Il testo scala con la larghezza disponibile (container query): la riga sta sempre su una linea
-     e senza scrollbar finche' il contenitore e' largo almeno ~840px; sotto quella soglia scorre di lato. */
-  .etf-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; container-type:inline-size; }
-  .etf-inner{ min-width:840px; font-size:12px; font-size:clamp(12px, calc(100cqw / 68), 14.5px); }
-  .etf-head, .etf-row{
-    display:grid;
-    grid-template-columns:6em 3.4em minmax(5.4em,1fr) minmax(5.4em,1fr) minmax(10.2em,1.5fr) minmax(4.2em,.8fr) minmax(6.2em,1.2fr) minmax(6.2em,1.1fr) minmax(4.2em,.8fr) minmax(8.8em,1.3fr) 2em;
-    gap:.5em; align-items:center;
-  }
-  .etf-head{
-    font-size:.92em; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-soft);
-    font-weight:600; padding:0 0 .8em; border-bottom:1px solid var(--line-strong);
-  }
-  .etf-head .r, .etf-row .r{ text-align:right; }
-  .etf-head .c, .etf-row .c{ text-align:center; }
-  .etf-row{ padding:.45em 0; border-bottom:1px solid var(--line); font-size:1em; }
-  .etf-row > *{ min-width:0; white-space:nowrap; }
-  .etf-row input, .etf-row select{
-    width:100%; min-width:0; font-size:1em; padding:.3em .4em;
-    border:1px solid var(--line-strong); border-radius:6px; background:#fff; font-family:'Inter',sans-serif;
-  }
-  .etf-row input.mono{ font-family:'IBM Plex Mono',monospace; text-align:right; }
-  .etf-row input.etf-name{ font-weight:600; }
-  .etf-row input.tcl{ padding:.3em .2em; }
-  .etf-row .rb-badge{ font-size:.95em; padding:.25em .65em; }
-  .etf-row .btn.danger{ padding:.2em .5em; font-size:.85em; }
-  .etf-sec{ margin-top:18px; }
-  .etf-sec-head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; padding:4px 0 8px; }
-  .etf-sec-head .spacer{ flex:1; }
-  .etf-empty{ font-size:12px; color:var(--ink-soft); padding:8px 2px; }
   /* ---------- Riepilogo annuo: classifica categorie cliccabile ---------- */
   .rank-list{ display:flex; flex-direction:column; gap:2px; }
   .rank-row{
@@ -412,11 +397,6 @@
   .rb-badge.ok{ background:var(--sage-soft); color:var(--sage); }
   .rb-badge.out{ background:var(--brick-soft); color:var(--brick); }
   .rb-badge.nd{ background:var(--parchment-dim); color:var(--ink-soft); }
-  .alloc-targets{ display:flex; flex-wrap:wrap; gap:8px 22px; margin-top:12px; font-size:13px; }
-  .alloc-targets > span{ display:inline-flex; align-items:center; }
-  .alloc-bar{ display:flex; height:14px; border-radius:7px; overflow:hidden; background:var(--parchment-dim); margin:4px 0 16px; }
-  .alloc-bar > span{ display:block; height:100%; }
-  .alloc-dot{ width:10px; height:10px; border-radius:3px; display:inline-block; margin-right:8px; flex-shrink:0; }
   .gain-pos{ color:var(--sage); font-weight:600; }
   .gain-neg{ color:var(--brick); font-weight:600; }
   .toast{
@@ -523,6 +503,32 @@
   .label-chip{ width:124px; letter-spacing:0; }
   .wm-badge{ width:100px; letter-spacing:.02em; }
   @media (max-width:860px){ .label-chip{ width:118px; } }
+.pos-table td,.pos-table th{font-weight:700;} .pos-table .stat-sub{font-weight:600;} .pos-table input{width:68px;}
+.grid.grid-3.inv-cards{ align-items:stretch; }
+.pos-table{ table-layout:fixed; width:100%; }
+.table-scroll .pos-table{ min-width:860px; }
+.pos-table th, .pos-table td, .pos-table th.num, .pos-table td.num{ text-align:center; padding-left:4px; padding-right:4px; }
+.pos-table input{ text-align:center; margin:0 auto; }
+.pos-table th{ line-height:1.25; }
+.inv-cards > .card{ min-height:214px; min-width:0; }
+.inv-split > div + div{ margin-top:16px; padding-top:16px; border-top:1.5px solid var(--line-strong); }
+.inv-split .stat-value{ font-size:26px; }
+.cost-grid{ display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:7px 14px; align-items:baseline; font-size:12.5px; }
+.cost-grid .ch{ font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft); font-weight:600; padding-bottom:4px; border-bottom:1px solid var(--line); }
+.cost-grid .num{ text-align:right; white-space:nowrap; }
+.pac-table td{ padding-top:3px; padding-bottom:3px; } .pac-table th{ padding-bottom:6px; }
+.table-scroll .pac-table{ min-width:560px; }
+.cost-grid .cn{ min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/* ---------- CAMPI ESPANDIBILI: evidenziati al passaggio del mouse (V7.4) ---------- */
+details.year-detail > summary, details.wallet-card-virtual > summary, details.ledger-row > summary{ border-radius:8px; transition:background .12s; }
+details.year-detail > summary, details.wallet-card-virtual > summary{ margin:-6px -8px; padding:6px 8px; }
+details.ledger-row > summary{ margin:0 -8px; padding:9px 8px; }
+.cl-text{ border-radius:4px; transition:background .12s, box-shadow .12s; }
+@media (hover:hover){
+  details.year-detail > summary:hover, details.ledger-row > summary:hover{ background:var(--parchment-dim); }
+  details.wallet-card-virtual > summary:hover{ background:#DFD3B3; }
+  .cl-text:hover{ background:var(--parchment-dim); box-shadow:0 0 0 4px var(--parchment-dim); }
+}
 </style>
 </head>
 <body>
@@ -543,7 +549,7 @@
    Dati: export CSV di Spendee. Uso: solo locale, storage personale.
    ============================================================ */
 
-const APP_VERSION = 'V4.1';
+const APP_VERSION = 'V7.4';
 
 const LABEL_MAP = {
   '🚨': 'EMERGENZE',
@@ -555,8 +561,6 @@ const LABEL_MAP = {
   '👰🏼\u200d♀️': 'FEDERICA',
   '🔄': 'RIMBORSABILI'
 };
-const ASSET_CLASSES = ['Azionaria','Obbligazionaria','Alternativi'];
-const ASSET_CLASS_COLORS = { 'Azionaria':'#C0392B', 'Obbligazionaria':'#2F6DB5', 'Alternativi':'#E3B520', '': '#B8B0A0' };
 const LABEL_ORDER = ['NECESSARIE','PIACERE','SPRECHI','ERBA','EMERGENZE','NICO','FEDERICA','RIMBORSABILI'];
 
 // colore ed emoji per ciascuna categoria di spesa, ricalcati sulle icone/colori usati in Spendee (vedi screenshot categorie)
@@ -640,14 +644,6 @@ if(typeof Chart !== 'undefined' && typeof ChartDataLabels !== 'undefined'){
   Chart.register(ChartDataLabels);
   Chart.defaults.set('plugins.datalabels', { display:false });
 }
-function contrastTextColor(bg){
-  // sceglie testo chiaro o scuro in base alla luminosità dello sfondo, per restare leggibile su qualunque colore di categoria
-  if(!bg || bg.indexOf('rgba')===0) return '#211D16';
-  const hex = bg.replace('#','');
-  const r = parseInt(hex.substr(0,2),16), g = parseInt(hex.substr(2,2),16), b = parseInt(hex.substr(4,2),16);
-  const luminance = (0.299*r + 0.587*g + 0.114*b)/255;
-  return luminance > 0.58 ? '#211D16' : '#FBF8F0';
-}
 
 /* ---------------- STATE ---------------- */
 const App = {
@@ -656,8 +652,6 @@ const App = {
   openingBalances: {},    // wallet -> number
   operational: {},        // wallet -> bool (conta nel riepilogo entrate/uscite mensile)
   plannedPayments: {},    // ym -> [{id, name, amount}]
-  investments: [],        // {id, name, invested, currentValue}
-  invHistory: [],         // {date, totalInvested, totalValue}
   route: { page:'home', month:null },
   charts: {},
   storageOK: true,
@@ -674,22 +668,16 @@ const App = {
   BACKUP_META_KEY: 'libroMastroBackupMeta',
   WALLET_ORDER: ['REVOLUT','BBVA','CONTANTI','FONDO EMERGENZA','SCALABLE','FONDAPI'], // ordine di visualizzazione preferito in Panoramica
   targetMonthsOperational: 2, // n. mesi di spesa media totale da tenere come cuscinetto nel Portafoglio Operativo
-  targetEquityPct: 60,        // quota azionaria desiderata (%) sul totale azionaria+obbligazionaria, prima degli alternativi
-  targetAltPct: 0,            // quota alternativi desiderata (%) sul portafoglio totale
-  pendingInvestments: [],     // trasferimenti verso Scalable in attesa di conferma: {id,key,date,amount,note,skip,split:{idETF:importo}}
-  pendingOut: null,           // prelievi da Scalable inseriti a mano per ETF {idETF:importo sottratto}
-  pendingSplit: null,         // ripartizione UNICA {idETF:importo} del totale netto dei trasferimenti in attesa
-  processedTransfers: [],     // chiavi dei trasferimenti gia' proposti/confermati/scartati: non vengono riproposti
   yearSel: {},                // categoria isolata nel grafico del riepilogo annuo, per anno (null = tutte)
   yearlyActiveYear: null,      // anno mostrato per intero (scheda attiva) nella pagina Riepilogo annuo (solo sessione)
   yearCtx: {},
   lastCsvImport: null,        // ultimo import CSV eseguito: {at (ISO), files[], mode, added, skipped}; viaggia dentro il backup .json
   investAmount: 0,            // importo (EUR) che voglio investire ora: viene ripartito tra gli ETF
-  maxShiftPct: 25,            // scostamento massimo RELATIVO al target (es. target 60% e shift 25% -> range 45-75%)
   targetMonthsEmergency: 6,   // n. mesi di spesa media NECESSARIE da tenere nel Fondo Emergenza
 
   async init(){
     await this.loadData();
+    this.ensureScalableWallet();
     this.loadBackupMeta();
     this.syncAllRecurrences(); // estende le ricorrenze fino al nuovo orizzonte se sono passati mesi dall'ultima apertura
     this.renderSidebar();
@@ -698,8 +686,43 @@ const App = {
 
   STORAGE_KEY: 'libroMastroFinanceData',
 
+  plannedSkips:{}, // seriesId -> { months:[mesi saltati], from:primo mese da cui la serie e' fermata }
   budgets:{},   // categoria -> [{from:'aaaa-mm', amount, set:'aaaa-mm'}]: storico dei budget, ogni voce vale dal mese 'from'
   relOpen:false,
+  rimbOpen:{}, // chiave sezione ('m2026-11' / 'y2026') -> bool: card "Rimborsati" aperta (solo sessione)
+  /* ---- Rimborsati: somma di uscite ed entrate con etichetta RIMBORSABILI (portafogli operativi) ---- */
+  rimbTotals(txs){
+    let exp = 0, inc = 0, n = 0;
+    txs.forEach(t=>{
+      if(!this.isOperational(t.wallet) || !t.labels.some(l=>labelName(l)==='RIMBORSABILI')) return;
+      if(t.type==='Expense'){ exp += Math.abs(t.amount); n++; }
+      else if(t.type==='Income'){ inc += t.amount; n++; }
+    });
+    return { exp, inc, net: inc-exp, n };
+  },
+  rimborsatiHTML(txs, key, scopeLabel){
+    const r = this.rimbTotals(txs), net = r.net;
+    const col = net>0.004 ? '#2E7D4F' : (net<-0.004 ? 'var(--brick)' : 'var(--ink)');
+    const val = (net>0.004?'+':(net<-0.004?'−':'')) + fmtEUR.format(Math.abs(net));
+    return `<div class="section-title"><span>Rimborsati</span>${scopeLabel?`<span class="stat-sub" style="font-weight:500;">· ${scopeLabel}</span>`:''}<span class="rule"></span></div>
+      <details class="card year-detail" style="padding:14px 20px;" ${this.rimbOpen[key]?'open':''} ontoggle="App.rimbOpen['${key}']=this.open">
+        <summary>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div>
+              <div class="stat-label">Saldo RIMBORSABILI (entrate − uscite)</div>
+              <div class="stat-sub">${r.n} ${r.n===1?'movimento':'movimenti'} · clicca per il dettaglio <span class="caret">▸</span></div>
+            </div>
+            <div class="stat-value mono" style="margin-top:0; font-size:24px; color:${col};">${val}</div>
+          </div>
+        </summary>
+        <div style="margin-top:12px; padding-top:8px; border-top:1px dashed var(--line-strong);">
+          <div class="ledger-row expense"><span class="ledger-name">Uscite</span><span class="ledger-leader"></span><span class="ledger-amt">${r.exp ? '−' : ''}${fmtEUR.format(r.exp)}</span></div>
+          <div class="ledger-row income"><span class="ledger-name">Entrate</span><span class="ledger-leader"></span><span class="ledger-amt">${r.inc ? '+' : ''}${fmtEUR.format(r.inc)}</span></div>
+        </div>
+      </details>`;
+  },
+  scalOpen:{}, // mese -> bool: riga Scalable scomposta (solo sessione)
+  toggleScalMonth(ym){ const y = window.scrollY; this.scalOpen[ym] = !this.scalOpen[ym]; this.render(); window.scrollTo(0,y); },
   txOpen:false, _clOpen:new Set(),
   _txv:0, _idx:null,
   idx(){
@@ -728,7 +751,6 @@ const App = {
       if(el.getBoundingClientRect().height / lh <= 3.3) return;
       el.classList.add('cl-text');
       if(!this._clOpen.has((el.textContent||'').trim().slice(0,60))) el.classList.add('cl-closed');
-      el.title = 'Clicca per espandere / comprimere';
     });
   },
   /* ---- budget mensile per categoria (con storico) ---- */
@@ -820,10 +842,16 @@ const App = {
   /* ---- composizione del patrimonio per portafoglio ---- */
   walletSeries(key){
     const ws = this.orderedWallets().filter(w=>this.isIncludedInTotal(w));
-    const run = {}; ws.forEach(w=> run[w] = this.openingBalances[w]||0);
-    const byDay = new Map();
-    [...this.transactions].sort((a,b)=>a.date-b.date).forEach(t=>{ if(t.wallet in run) run[t.wallet] += t.amount; byDay.set(t.dateStr, {...run}); });
-    let pts = Array.from(byDay.entries()).map(([d,v])=>({ d, v }));
+    const invW = ws.find(w=>this.useInvFor(w));
+    const run = {}; ws.forEach(w=> run[w] = (w===invW) ? 0 : (this.openingBalances[w]||0));
+    const txs = [...this.transactions].sort((a,b)=>a.date-b.date), days = new Set(txs.map(t=>t.dateStr));
+    if(invW){ (this.inv.series||[]).forEach(p=>{ if(p.d) days.add(p.d); }); if(this.inv.asOf) days.add(this.inv.asOf); }
+    let ti = 0, pts = [];
+    Array.from(days).sort().forEach(d=>{
+      while(ti<txs.length && txs[ti].dateStr<=d){ const t = txs[ti++]; if(t.wallet in run && t.wallet!==invW) run[t.wallet] += t.amount; }
+      const v = {...run}; if(invW) v[invW] = this.invValueAt(new Date(d+'T00:00:00Z'));
+      pts.push({ d, v });
+    });
     const cutoff = this.periodCutoffDate(key);
     if(cutoff){
       const cs = cutoff.toISOString().slice(0,10);
@@ -873,7 +901,7 @@ const App = {
     const freshR = days===null ? 0 : days<=7 ? 1 : days<=21 ? 0.6 : days<=45 ? 0.27 : 0;
     const plannedMonths = lf.rows.filter(x=>x.planned>0).length, hasFixed = series.length>0 || plannedMonths>0;
     const pac = this.investAmount||0;
-    const recentTr = this.transactions.filter(t=>this.isScalableWallet(t.wallet) && t.type==='Incoming Transfer' && t.date.getTime() > Date.now()-100*864e5).length;
+    const flR = this.invFlows(); const recentTr = flR ? flR.filter(f=>f.a>0 && new Date(f.d+'T00:00:00Z').getTime() > Date.now()-100*864e5).length : this.transactions.filter(t=>this.isScalableWallet(t.wallet) && t.type==='Incoming Transfer' && t.date.getTime() > Date.now()-100*864e5).length;
     const factors = [
       { w:35, r:Math.min(1, n/12), label:'Storico', txt:`${n} mesi completati su 12` },
       { w:20, r:cvR(cvInc), label:'Stabilità delle entrate', txt:cvT(cvInc) },
@@ -899,6 +927,7 @@ const App = {
   },
   /* ---- investiti = trasferimenti in ingresso verso il portafoglio SCALABLE ---- */
   investedIn(ym){
+    const fl = this.invFlows(); if(fl) return fl.filter(f=>f.d.slice(0,7)===ym).reduce((x,f)=>x+f.a,0); // versamenti netti dal backup investimenti
     const tr = this.monthTx(ym).filter(t=>this.isScalableWallet(t.wallet));
     const inn = tr.filter(t=>t.type==='Incoming Transfer' && t.amount>0).reduce((x,t)=>x+t.amount, 0);
     const out = tr.filter(t=>t.type==='Outgoing Transfer' && t.amount<0).reduce((x,t)=>x+t.amount, 0); // negativo
@@ -959,26 +988,6 @@ const App = {
   },
   filterTx(ym, q){ const el = document.getElementById('tx-results'); if(el) el.innerHTML = this.txResultsHTML(ym, q); },
 
-  /* ---- rendimento annualizzato (XIRR) sui flussi verso/da Scalable ---- */
-  xirr(){
-    const w = this.findWalletByKeyword('SCALABLE'); if(!w) return null;
-    const flows = this.transactions.filter(t=>t.wallet===w && (t.type==='Incoming Transfer'||t.type==='Outgoing Transfer')).map(t=>({ d:t.date.getTime(), a:-t.amount }));
-    const V = this.investments.reduce((x,i)=>x+i.currentValue,0);
-    if(!flows.length || !(V>0) || !flows.some(f=>f.a<0)) return null;
-    const t0 = Math.min(...flows.map(f=>f.d));
-    if(Date.now()-t0 < 90*864e5) return null; // sotto ~3 mesi annualizzare non ha senso
-    flows.push({ d:Date.now(), a:V });
-    const npv = (rate)=> flows.reduce((x,f)=> x + f.a/Math.pow(1+rate, (f.d-t0)/31557600000), 0);
-    let lo = -0.99, hi = 10;
-    if(npv(lo)*npv(hi) > 0) return null;
-    for(let i=0;i<100;i++){ const m = (lo+hi)/2; if(npv(lo)*npv(m) <= 0) hi = m; else lo = m; }
-    return (lo+hi)/2*100;
-  },
-  xirrHTML(){
-    const x = this.xirr();
-    return x===null ? '' : ` · <span title="Rendimento annualizzato (XIRR) calcolato sui trasferimenti verso/da Scalable e sul valore attuale degli ETF">Annualizzato <strong>${fmtPct(x)}</strong></span>`;
-  },
-
   async loadData(){
     try{
       const raw = localStorage.getItem(this.STORAGE_KEY);
@@ -990,22 +999,15 @@ const App = {
         this.operational = d.operational || {};
         this.totalIncludedWallets = d.totalIncludedWallets || {};
         this.plannedPayments = d.plannedPayments || {};
-        this.investments = d.investments || [];
-        this.invHistory = (d.invHistory||[]).map(h => ({...h, date:h.date}));
         if(Number.isFinite(d.targetMonthsOperational)) this.targetMonthsOperational = d.targetMonthsOperational;
         if(Number.isFinite(d.targetMonthsEmergency)) this.targetMonthsEmergency = d.targetMonthsEmergency;
-        if(Number.isFinite(d.targetEquityPct)) this.targetEquityPct = d.targetEquityPct;
-        if(Number.isFinite(d.targetAltPct)) this.targetAltPct = d.targetAltPct;
-        if(Number.isFinite(d.maxShiftPct)) this.maxShiftPct = d.maxShiftPct;
         if(Number.isFinite(d.plannedApproxTolPct)) this.PLANNED_APPROX_TOL_PCT = d.plannedApproxTolPct;
         if(Number.isFinite(d.plannedProposalWindowPct)) this.PLANNED_PROPOSAL_WINDOW_PCT = d.plannedProposalWindowPct;
         if(Number.isFinite(d.investAmount)) this.investAmount = d.investAmount;
+        this.inv = (d.inv && Array.isArray(d.inv.positions)) ? d.inv : null; if(d.invParams && typeof d.invParams==='object') this.invParams = { ...this.invParams, ...d.invParams };
         this.budgets = (d.budgets && typeof d.budgets==='object' && !Array.isArray(d.budgets)) ? d.budgets : {};
+        this.plannedSkips = (d.plannedSkips && typeof d.plannedSkips==='object' && !Array.isArray(d.plannedSkips)) ? d.plannedSkips : {};
         this.lastCsvImport = (d.lastCsvImport && d.lastCsvImport.at) ? d.lastCsvImport : null;
-        if(Array.isArray(d.pendingInvestments)) this.pendingInvestments = d.pendingInvestments;
-        if(Array.isArray(d.processedTransfers)) this.processedTransfers = d.processedTransfers;
-        this.pendingSplit = (d.pendingSplit && typeof d.pendingSplit==='object' && !Array.isArray(d.pendingSplit)) ? d.pendingSplit : null;
-        this.pendingOut = (d.pendingOut && typeof d.pendingOut==='object' && !Array.isArray(d.pendingOut)) ? d.pendingOut : null;
       }
     }catch(e){
       // nessun dato salvato ancora, o localStorage non disponibile: stato vuoto, nessun errore da mostrare
@@ -1021,21 +1023,15 @@ const App = {
       operational: this.operational,
       totalIncludedWallets: this.totalIncludedWallets,
       plannedPayments: this.plannedPayments,
-      investments: this.investments,
-      invHistory: this.invHistory,
       targetMonthsOperational: this.targetMonthsOperational,
       targetMonthsEmergency: this.targetMonthsEmergency,
-      targetEquityPct: this.targetEquityPct,
-      targetAltPct: this.targetAltPct,
-      maxShiftPct: this.maxShiftPct,
       plannedApproxTolPct: this.PLANNED_APPROX_TOL_PCT,
       plannedProposalWindowPct: this.PLANNED_PROPOSAL_WINDOW_PCT,
       investAmount: this.investAmount,
+      inv: this.inv,
+      invParams: this.invParams,
       budgets: this.budgets,
-      pendingInvestments: this.pendingInvestments,
-      processedTransfers: this.processedTransfers,
-      pendingSplit: this.pendingSplit,
-      pendingOut: this.pendingOut,
+      plannedSkips: this.plannedSkips,
       lastCsvImport: this.lastCsvImport
     };
   },
@@ -1107,23 +1103,17 @@ const App = {
         this.operational = d.operational || {};
         this.totalIncludedWallets = d.totalIncludedWallets || {};
         this.plannedPayments = d.plannedPayments || {};
-        this.investments = d.investments || [];
-        this.invHistory = (d.invHistory||[]).map(h => ({...h, date:h.date}));
         if(Number.isFinite(d.targetMonthsOperational)) this.targetMonthsOperational = d.targetMonthsOperational;
         if(Number.isFinite(d.targetMonthsEmergency)) this.targetMonthsEmergency = d.targetMonthsEmergency;
-        if(Number.isFinite(d.targetEquityPct)) this.targetEquityPct = d.targetEquityPct;
-        if(Number.isFinite(d.targetAltPct)) this.targetAltPct = d.targetAltPct;
-        if(Number.isFinite(d.maxShiftPct)) this.maxShiftPct = d.maxShiftPct;
         if(Number.isFinite(d.plannedApproxTolPct)) this.PLANNED_APPROX_TOL_PCT = d.plannedApproxTolPct;
         if(Number.isFinite(d.plannedProposalWindowPct)) this.PLANNED_PROPOSAL_WINDOW_PCT = d.plannedProposalWindowPct;
         if(Number.isFinite(d.investAmount)) this.investAmount = d.investAmount;
+        this.inv = (d.inv && Array.isArray(d.inv.positions)) ? d.inv : null; if(d.invParams && typeof d.invParams==='object') this.invParams = { ...this.invParams, ...d.invParams };
         this.budgets = (d.budgets && typeof d.budgets==='object' && !Array.isArray(d.budgets)) ? d.budgets : {};
+        this.plannedSkips = (d.plannedSkips && typeof d.plannedSkips==='object' && !Array.isArray(d.plannedSkips)) ? d.plannedSkips : {};
         this.lastCsvImport = (d.lastCsvImport && d.lastCsvImport.at) ? d.lastCsvImport : null;
-        if(Array.isArray(d.pendingInvestments)) this.pendingInvestments = d.pendingInvestments;
-        if(Array.isArray(d.processedTransfers)) this.processedTransfers = d.processedTransfers;
-        this.pendingSplit = (d.pendingSplit && typeof d.pendingSplit==='object' && !Array.isArray(d.pendingSplit)) ? d.pendingSplit : null;
-        this.pendingOut = (d.pendingOut && typeof d.pendingOut==='object' && !Array.isArray(d.pendingOut)) ? d.pendingOut : null;
         this.syncAllRecurrences();
+        this.ensureScalableWallet();
         this.saveData();
         this.backupMeta.loadedName = file.name;
         this.saveBackupMeta();
@@ -1267,7 +1257,6 @@ const App = {
       return;
     }
 
-    const prevKeys = new Set(this.transactions.map(t=>this.txKey(t)));
     let addedCount, skippedCount;
     if(mode === 'replace'){
       const keptManual = this.transactions.filter(t=>t.manual); // i movimenti manuali non fanno parte del CSV: li preservo sempre
@@ -1292,14 +1281,14 @@ const App = {
       if(!(w in this.openingBalances)) this.openingBalances[w] = 0;
       if(!(w in this.operational)) this.operational[w] = this.guessOperational(w);
     });
+    this.ensureScalableWallet();
     const matchedPlanned = this.reconcilePlannedPayments();
-    const newPending = this.collectScalableTransfers(prevKeys);
     const nProp = this.pendingProposals().length;
-    const scalableNote = (newPending ? ` ${newPending} ${newPending===1?'trasferimento':'trasferimenti'} verso Scalable da confermare.` : '') + (nProp ? ` ${nProp} ${nProp===1?'abbinamento':'abbinamenti'} di pagamenti previsti da confermare.` : '');
+    const scalableNote = (nProp ? ` ${nProp} ${nProp===1?'abbinamento':'abbinamenti'} di pagamenti previsti da confermare.` : '');
     this.lastCsvImport = { at: new Date().toISOString(), files: fileNames, mode, added: addedCount, skipped: skippedCount };
     this.saveData();
     this.renderSidebar();
-    this.navigate(newPending ? 'invreview' : 'home');
+    this.navigate('home');
     if(mode === 'replace'){
       const keptManual = this.transactions.filter(t=>t.manual).length;
       this.showToast(`Dati sostituiti: ${addedCount} movimenti caricati da ${fileNames.length} file.${keptManual?` ${keptManual} movimenti manuali mantenuti.`:''}${matchedPlanned?` ${matchedPlanned} pagamenti previsti segnati come pagati.`:''}${scalableNote}`);
@@ -1357,12 +1346,6 @@ const App = {
     return { invested, interest, taxes: taxesNet };
   },
 
-  grossInvestedScalable(){
-    // stesso valore mostrato come "Investito" nella card Scalable in Panoramica (lordo, prima delle commissioni)
-    const w = this.findWalletByKeyword('SCALABLE');
-    return w ? this.investedWalletStats(w).invested : null;
-  },
-
   orderedWallets(){
     // ordina i portafogli secondo WALLET_ORDER (per parola chiave contenuta nel nome, senza emoji);
     // quelli non riconosciuti restano in fondo, in ordine alfabetico
@@ -1378,7 +1361,48 @@ const App = {
     });
   },
 
+  /* ---- Scalable: saldo e storico dal backup investimenti (pagina Investimenti), non dall'import Spendee ---- */
+  useInvFor(w){ return !!(this.inv && Array.isArray(this.inv.positions) && this.inv.positions.length && this.isScalableWallet(w)); },
+  invTotal(){ return this.inv.positions.reduce((s,p)=>s+(Number(p.value)||0),0); },
+  invFlows(){ const f = this.inv && Array.isArray(this.inv.flows) ? this.inv.flows.filter(x=>x && x.d && Number.isFinite(x.a)) : []; return f.length ? f : null; },
+  invValueAt(date){
+    const I = this.inv, tot = this.invTotal(), x = date.getTime();
+    const pts = (I.series||[]).filter(p=>p.d && Number.isFinite(p.val)).map(p=>({ t:new Date(p.d+'T00:00:00Z').getTime(), v:p.val }));
+    if(!pts.length) return tot;
+    const asOf = I.asOf ? new Date(I.asOf+'T00:00:00Z').getTime() : Infinity;
+    if(x>=asOf || x>=pts[pts.length-1].t) return tot;
+    if(x<pts[0].t) return 0;
+    for(let i=1;i<pts.length;i++){ if(x<=pts[i].t){ const a = pts[i-1], b = pts[i]; return a.v + (b.v-a.v)*(x-a.t)/(b.t-a.t); } }
+    return tot;
+  },
+  invSummary(){
+    const I = this.inv, P = I.positions, tot = this.invTotal(), cost = P.reduce((s,p)=>s+(Number(p.cost)||0),0), fl = this.invFlows(), ser = I.series||[];
+    const tInv = fl ? fl.reduce((x,f)=>x+f.a,0) : (ser.length && Number.isFinite(ser[ser.length-1].inv) ? ser[ser.length-1].inv : cost);
+    const mx = (I.periods && I.periods.MAX) || null, gm = (k)=> (mx && mx[k]) ? mx[k].v : 0;
+    const costs = mx ? gm('commissioni')+gm('spread')+gm('ter')+gm('bollo') : P.reduce((x,p)=>x+(p.fees||0)+(p.spreadPaid||0)+p.value*(this.terOf(p)||0)/100,0)+(I.extraFees||0)+tot*0.002;
+    return { tot, cost, tInv, gp: tot-cost, costs };
+  },
+  invMonthStats(ym){
+    // Scalable nel mese: versamenti netti (flows), variazione di valore al netto dei versamenti (mercato) e totale = valore fine mese - valore fine mese precedente
+    const I = this.inv; if(!I) return null;
+    const ser = (I.series||[]).filter(p=>p.d && Number.isFinite(p.val)), fl = this.invFlows()||[], asOfYm = (I.asOf||'').slice(0,7);
+    const firstYm = [ser.length ? ser[0].d.slice(0,7) : null, fl.length ? fl.map(f=>f.d).sort()[0].slice(0,7) : null].filter(Boolean).sort()[0];
+    if(!firstYm || !asOfYm || ym<firstYm || ym>asOfYm) return null;
+    const endVal = (m)=>{ if(asOfYm<=m) return this.invTotal(); let v = 0; ser.forEach(p=>{ if(p.d<=m+'-31') v = p.val; }); return v; };
+    const inv = this.investedIn(ym), tot = endVal(ym) - endVal(addMonthsToYm(ym,-1));
+    return { inv, market: tot-inv, tot };
+  },
+  ensureScalableWallet(){
+    // il portafoglio Scalable deve esistere anche senza movimenti Spendee: se c'e' il backup investimenti lo creo (non operativo)
+    if(!(this.inv && Array.isArray(this.inv.positions) && this.inv.positions.length)) return;
+    if(this.wallets.some(w=>this.isScalableWallet(w))) return;
+    const n = 'SCALABLE CAPITAL';
+    this.wallets.push(n); this.wallets.sort();
+    if(!(n in this.openingBalances)) this.openingBalances[n] = 0;
+    this.operational[n] = false;
+  },
   walletBalance(wallet){
+    if(this.useInvFor(wallet)) return this.invTotal();
     const open = this.openingBalances[wallet] || 0;
     const sum = this.idx().walletSum.get(wallet) || 0;
     return open + sum;
@@ -1401,7 +1425,7 @@ const App = {
   },
   walletBalanceBeforePeriod(wallet, key){
     const cutoff = this.periodCutoffDate(key);
-    return cutoff===null ? (this.openingBalances[wallet]||0) : this.walletBalanceAt(wallet, cutoff);
+    return cutoff===null ? (this.useInvFor(wallet) ? 0 : (this.openingBalances[wallet]||0)) : this.walletBalanceAt(wallet, cutoff);
   },
   totalPeriodDelta(key){
     // confronta il Patrimonio totale attuale con quello a inizio periodo; 'all' usa i saldi di apertura (inizio di tutto lo storico)
@@ -1418,6 +1442,7 @@ const App = {
     this.render();
   },
   walletBalanceAt(wallet, cutoffDate){
+    if(this.useInvFor(wallet)) return this.invValueAt(cutoffDate);
     const open = this.openingBalances[wallet] || 0;
     const sum = (this.idx().byWallet.get(wallet)||[]).filter(t=>t.date<=cutoffDate).reduce((s,t)=>s+t.amount,0);
     return open + sum;
@@ -1539,7 +1564,7 @@ const App = {
     const baseNow = Math.max(0, varExp.avg - spentNow) - Math.max(0, avgInc.avg - incomeNow);
     let runOp = opStart, runCombined = combinedStart, cur = nowYm, total12 = 0;
     const pac = Math.max(0, this.investAmount||0); // PAC mensile = campo INVESTI € della pagina Investimenti
-    const pacDone = this.transactions.filter(t=>t.ym===nowYm && this.isScalableWallet(t.wallet) && t.type==='Incoming Transfer').reduce((x,t)=>x+t.amount,0);
+    const flN = this.invFlows(); const pacDone = flN ? flN.filter(f=>f.a>0 && f.d.slice(0,7)===nowYm).reduce((x,f)=>x+f.a,0) : this.transactions.filter(t=>t.ym===nowYm && this.isScalableWallet(t.wallet) && t.type==='Incoming Transfer').reduce((x,t)=>x+t.amount,0);
     const pacNow = Math.max(0, pac - pacDone); // nel mese in corso conta solo la parte non ancora versata
     const rows = [];
     for(let i=0;i<HORIZON;i++){
@@ -1582,16 +1607,17 @@ const App = {
   patrimonioSeries(){
     // punto per ogni giorno con movimenti: totale patrimonio a fine giornata (valore cumulato)
     if(!this.transactions.length) return [];
-    const running = {};
-    const inc = new Set(this.wallets.filter(w=>this.isIncludedInTotal(w))); let total = 0; inc.forEach(w=>{ total += this.openingBalances[w]||0; });
-    const byDay = new Map(); // dateStr -> running snapshot after that day's txs
-    const sorted = [...this.transactions].sort((a,b)=>a.date-b.date);
-    sorted.forEach(t=>{
-      if(inc.has(t.wallet)) total += t.amount;
-      
-      byDay.set(t.dateStr, total);
+    const inc = new Set(this.wallets.filter(w=>this.isIncludedInTotal(w)));
+    const invW = this.wallets.find(w=>this.useInvFor(w)), invInc = !!invW && inc.has(invW);
+    let total = 0; inc.forEach(w=>{ if(w!==invW) total += this.openingBalances[w]||0; });
+    const sorted = [...this.transactions].sort((a,b)=>a.date-b.date), days = new Set(sorted.map(t=>t.dateStr));
+    if(invInc){ (this.inv.series||[]).forEach(p=>{ if(p.d) days.add(p.d); }); if(this.inv.asOf) days.add(this.inv.asOf); }
+    let i = 0; const out = [];
+    Array.from(days).sort().forEach(d=>{
+      while(i<sorted.length && sorted[i].dateStr<=d){ const t = sorted[i++]; if(inc.has(t.wallet) && t.wallet!==invW) total += t.amount; }
+      out.push({ dateStr:d, total: total + (invInc ? this.invValueAt(new Date(d+'T00:00:00Z')) : 0) });
     });
-    return Array.from(byDay.entries()).map(([dateStr,total])=>({dateStr,total}));
+    return out;
   },
   patrimonioSeriesForPeriod(key){
     const full = this.patrimonioSeries();
@@ -1660,7 +1686,53 @@ const App = {
     this.render();
   },
   removePlanned(ym, id){
+    const item = (this.plannedPayments[ym]||[]).find(p=>p.id===id);
+    if(item && item.recurrence && item.seriesId){ this.askRecurringRemove(ym, item); return; } // la scelta si chiede solo per i pagamenti Mensile/Annuale
     this.plannedPayments[ym] = (this.plannedPayments[ym]||[]).filter(p=>p.id!==id);
+    this.saveData();
+    this.render();
+  },
+  isSeriesSkipped(sid, ym){
+    const sk = this.plannedSkips[sid];
+    return !!sk && ((sk.from && ym>=sk.from) || (sk.months||[]).includes(ym));
+  },
+  askRecurringRemove(ym, item){
+    const old = document.getElementById('confirm-modal'); if(old) old.remove();
+    const ov = document.createElement('div');
+    ov.className = 'modal-overlay'; ov.id = 'confirm-modal';
+    ov.innerHTML = `<div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <h3 class="modal-title" id="confirm-title">Rimuovere un pagamento ricorrente</h3>
+      <p class="modal-msg">«${this.esc(item.name)}» è ${item.recurrence==='yearly'?'annuale':'mensile'}. Vuoi rimuovere solo ${this.esc(this.monthLabel(ym))} oppure anche tutte le occorrenze successive non ancora pagate?</p>
+      <div class="modal-actions">
+        <button class="btn ghost small" data-act="no">Annulla</button>
+        <button class="btn ghost small" data-act="one">Solo questo mese</button>
+        <button class="btn small" data-act="all">Questo e successivi</button>
+      </div></div>`;
+    const close = ()=>{ ov.remove(); document.removeEventListener('keydown', onKey, true); };
+    const onKey = (e)=>{ if(e.key==='Escape') close(); };
+    ov.addEventListener('click', (e)=>{
+      if(e.target===ov){ close(); return; }
+      const b = e.target.closest('button[data-act]'); if(!b) return;
+      const act = b.dataset.act; close();
+      if(act==='one' || act==='all') this.removeRecurring(ym, item.id, act);
+    });
+    document.addEventListener('keydown', onKey, true);
+    document.body.appendChild(ov);
+    const btn = ov.querySelector('[data-act="one"]'); if(btn) btn.focus();
+  },
+  removeRecurring(ym, id, scope){
+    const item = (this.plannedPayments[ym]||[]).find(p=>p.id===id); if(!item) return;
+    const sid = item.seriesId, sk = this.plannedSkips[sid] || (this.plannedSkips[sid] = { months:[], from:null });
+    if(scope==='one'){
+      if(!sk.months.includes(ym)) sk.months.push(ym); // la ricorrenza non ricrea piu' questo mese
+      this.plannedPayments[ym] = (this.plannedPayments[ym]||[]).filter(p=>p.id!==id);
+    } else {
+      if(!sk.from || ym<sk.from) sk.from = ym; // la serie si ferma da questo mese in poi
+      Object.keys(this.plannedPayments).forEach(m=>{
+        if(m<ym) return;
+        this.plannedPayments[m] = (this.plannedPayments[m]||[]).filter(p=>{ if(p.id===id) return false; if(p.seriesId!==sid) return true; return p.paid; }); // i gia' pagati restano
+      });
+    }
     this.saveData();
     this.render();
   },
@@ -1670,6 +1742,7 @@ const App = {
     const item = (this.plannedPayments[ym]||[]).find(p=>p.id===id);
     if(!item) return;
     if(!item.seriesId) item.seriesId = uid();
+    if(newType) delete this.plannedSkips[item.seriesId]; // riattivare la ricorrenza la fa ripartire da zero
     item.recurrence = newType; // 'monthly' | 'yearly' | null
     this.pruneFutureSeries(item.seriesId, ym, newType);
     if(newType) this.generateForward(item, ym);
@@ -1697,6 +1770,7 @@ const App = {
       if(ym<=fromYm) return;
       const include = item.recurrence==='monthly' ? true : (ym.split('-')[1]===om);
       if(!include) return;
+      if(this.isSeriesSkipped(item.seriesId, ym)) return;
       if(!this.plannedPayments[ym]) this.plannedPayments[ym] = [];
       const existing = this.plannedPayments[ym].find(p=>p.seriesId===item.seriesId);
       if(existing){
@@ -2138,270 +2212,13 @@ const App = {
     return arr;
   },
 
-  /* ---------------- INVESTMENTS ---------------- */
-  addInvestment(cls){
-    this.investments.push({ id: uid(), name:'Nuovo ETF', assetClass: cls||'', targetPct:0, invested:0, currentValue:0 });
-    this.saveData();
-    this.render();
-  },
-  updateInvestment(id, field, value){
-    const inv = this.investments.find(i=>i.id===id);
-    if(!inv) return;
-    inv[field] = (field==='name') ? value : this.parseNum(value);
-  },
-  setAssetClass(id, value){
-    const inv = this.investments.find(i=>i.id===id);
-    if(!inv) return;
-    inv.assetClass = value;
-    this.saveData();
-    this.render(); // l'ETF cambia sezione
-  },
-  allocationData(){
-    // pesi calcolati sul VALORE ATTUALE (non sull'investito): e' l'allocazione reale del portafoglio oggi
-    const totalValue = this.investments.reduce((s,i)=>s+i.currentValue,0);
-    const rows = [...ASSET_CLASSES, ''].map(cls=>{
-      const list = this.investments.filter(i=>(i.assetClass||'')===cls);
-      const value = list.reduce((s,i)=>s+i.currentValue,0);
-      return { cls, label: cls || 'Non assegnato', value, count:list.length, pct: totalValue ? value/totalValue*100 : 0 };
-    });
-    return { totalValue, rows };
-  },
-  clampPct(v){ return Math.min(100, Math.max(0, Number(v)||0)); },
-  setAllocParam(key, value){
-    this[key] = this.clampPct(parseFloat(String(value).replace(',','.')));
-    this.saveData();
-    this.refreshInvTotals();
-  },
-  setInvTarget(id, value){
-    const inv = this.investments.find(i=>i.id===id);
-    if(!inv) return;
-    inv.targetPct = this.clampPct(parseFloat(String(value).replace(',','.')));
-    this.saveData();
-    this.refreshInvTotals();
-  },
-  allocTargets(){
-    // E = quota azionaria su 100 (obbligazionaria = 100-E); poi gli alternativi A tolgono spazio in modo proporzionale a entrambe
-    const E = this.clampPct(this.targetEquityPct), A = this.clampPct(this.targetAltPct);
-    const f = 1 - A/100;
-    return { 'Azionaria': E*f, 'Obbligazionaria': (100-E)*f, 'Alternativi': A };
-  },
-  rebalStatus(cur, target, allowZero){
-    // shift RELATIVO: range = target*(1-shift) ... target*(1+shift)
-    if(!(target>0) && !(allowZero && target===0)) return { state:'nd', lo:null, hi:null };
-    const sh = this.clampPct(this.maxShiftPct)/100;
-    const lo = target*(1-sh), hi = target*(1+sh);
-    const eps = 0.05; // tolleranza di arrotondamento (0,05 punti percentuali)
-    const state = cur < lo-eps ? 'under' : (cur > hi+eps ? 'over' : 'ok');
-    return { state, lo, hi };
-  },
-  rbBadge(state, compact){
-    if(compact){
-      if(state==='ok') return '<span class="rb-badge ok">Nel range</span>';
-      if(state==='over') return '<span class="rb-badge out">▲ Sopra</span>';
-      if(state==='under') return '<span class="rb-badge out">▼ Sotto</span>';
-      return '<span class="rb-badge nd">Senza target</span>';
-    }
-    if(state==='ok') return '<span class="rb-badge ok">Nel range</span>';
-    if(state==='over') return '<span class="rb-badge out">Sopra · ribilancia</span>';
-    if(state==='under') return '<span class="rb-badge out">Sotto · ribilancia</span>';
-    return '<span class="rb-badge nd">Target non impostato</span>';
-  },
-  rbMove(cur, target, totalValue){
-    const diff = (target-cur)/100*totalValue;
-    if(Math.abs(diff)<1) return '—';
-    return diff>0 ? `<span style="color:var(--sage)">Compra ${fmtEUR0.format(diff)}</span>` : `<span style="color:var(--brick)">Vendi ${fmtEUR0.format(-diff)}</span>`;
-  },
-  fmtPct1(v){ return v.toFixed(1).replace('.',',')+'%'; },
-  rbRange(st){ return st.lo===null ? '—' : `${this.fmtPct1(st.lo)} – ${this.fmtPct1(st.hi)}`; },
-  etfEffTarget(inv){
-    // target dell'ETF sul portafoglio totale = target nella classe x target della classe (es. 45% di 60% = 27%)
-    if(!inv.assetClass) return null;
-    return (inv.targetPct||0)/100 * this.allocTargets()[inv.assetClass];
-  },
-  etfClassWeight(inv){
-    // peso dell'ETF dentro la propria classe (0-100): e' il valore confrontato col target ETF, che e' espresso nella classe
-    if(!inv.assetClass) return null;
-    const classValue = this.investments.filter(i=>i.assetClass===inv.assetClass).reduce((x,i)=>x+i.currentValue,0);
-    return classValue ? inv.currentValue/classValue*100 : 0;
-  },
-  allocDerivedHTML(){
-    const T = this.allocTargets();
-    return ASSET_CLASSES.map(c=>`<span><span class="alloc-dot" style="background:${ASSET_CLASS_COLORS[c]};"></span>${c}: <strong class="mono" style="margin-left:5px;">${this.fmtPct1(T[c])}</strong></span>`).join('');
-  },
-  allocationHTML(){
-    const a = this.allocationData(), T = this.allocTargets();
-    if(!this.investments.length || !a.totalValue){
-      return `<div class="stat-sub" style="padding:6px 2px;">Inserisci il valore attuale degli ETF e assegna a ciascuno una classe per vedere allocazione e stato di ribilanciamento.</div>`;
-    }
-    const rows = a.rows.filter(r=>r.cls!=='' || r.value>0).map(r=>{
-      const isCls = r.cls!=='';
-      const dot = `<span class="alloc-dot" style="background:${ASSET_CLASS_COLORS[r.cls]};"></span>`;
-      if(!isCls){
-        return `<tr><td>${dot}${r.label}</td><td class="num mono">${fmtEUR.format(r.value)}</td><td class="num mono">${this.fmtPct1(r.pct)}</td><td class="num">—</td><td class="num">—</td><td>—</td><td class="num">—</td></tr>`;
-      }
-      const st = this.rebalStatus(r.pct, T[r.cls], true);
-      return `<tr>
-        <td><strong>${dot}${r.label}</strong></td>
-        <td class="num mono">${fmtEUR.format(r.value)}</td>
-        <td class="num mono"><strong>${this.fmtPct1(r.pct)}</strong></td>
-        <td class="num mono">${this.fmtPct1(T[r.cls])}</td>
-        <td class="num mono">${this.rbRange(st)}</td>
-        <td>${this.rbBadge(st.state)}</td>
-        <td class="num mono">${(st.state==='over'||st.state==='under') ? this.rbMove(r.pct, T[r.cls], a.totalValue) : '—'}</td>
-      </tr>`;
-    }).join('');
-    const unassigned = a.rows.find(r=>r.cls==='' && r.value>0);
-    return `<div class="table-scroll"><table class="inv-table">
-        <thead><tr><th>Classe</th><th class="num">Valore</th><th class="num">Attuale</th><th class="num">Target</th><th class="num">Range</th><th>Stato</th><th class="num">Per tornare al target</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table></div>
-      ${unassigned ? `<div class="label-note" style="padding-left:2px;">Alcuni ETF non hanno una classe assegnata: sono esclusi dal confronto con i target.</div>` : ''}`;
-  },
   setInvestAmount(value){
     this.investAmount = Math.max(0, this.parseNum(value));
     this.saveData();
-    this.refreshInvTotals();
+    if(this.route.page==='investments') this.render();
+    this.showToast('PAC aggiornato.');
   },
-  investPlan(){
-    const a = this.allocationData();
-    const V = a.totalValue, X = this.investAmount || 0;
-    const ordered = ASSET_CLASSES.flatMap(c => this.investments.filter(i=>i.assetClass===c));
-    const rows = ordered.map(inv=>{
-      const eff = this.etfEffTarget(inv) || 0;
-      const w = V ? inv.currentValue/V*100 : 0;
-      const st = this.rebalStatus(w, eff, false);
-      return { inv, eff, state: st.state, simple: X*eff/100, need:0, reb:null };
-    });
-    // ribilanciante: solo gli ETF SOTTO il range ricevono soldi; l'obiettivo e' il target sul portafoglio dopo l'investimento (V+X)
-    const under = rows.filter(r=>r.state==='under');
-    under.forEach(r=>{ r.need = Math.max(0, r.eff/100*(V+X) - r.inv.currentValue); });
-    const S = under.reduce((x,r)=>x+r.need,0);
-    const scale = S > X ? (S ? X/S : 0) : 1;
-    under.forEach(r=>{ r.reb = r.need*scale; });
-    const allocated = under.reduce((x,r)=>x+r.reb,0);
-    return { rows, X, V, allocated, leftover: X-allocated, scaled: S>X, underCount: under.length };
-  },
-  investCalcHTML(){
-    if(!this.investments.length) return '';
-    const X = this.investAmount || 0;
-    if(!(X>0)){
-      return `<div class="label-note" style="padding-left:2px;">Inserisci un importo in "INVESTI €" per vedere quanto destinare a ogni ETF.</div>`;
-    }
-    const pl = this.investPlan();
-    const rows = pl.rows.map(r=>{
-      let reb;
-      if(r.state==='under') reb = `<strong>${fmtEUR.format(r.reb)}</strong>`;
-      else if(r.state==='over') reb = '<span class="stat-sub">Non comprare</span>';
-      else reb = '—';
-      return `<tr>
-        <td><span class="alloc-dot" style="background:${ASSET_CLASS_COLORS[r.inv.assetClass]};"></span><strong>${r.inv.name}</strong></td>
-        <td style="text-align:center;">${this.rbBadge(r.state, true)}</td>
-        <td class="num mono">${r.eff>0 ? this.fmtPct1(r.eff) : '—'}</td>
-        <td class="num mono">${fmtEUR.format(r.simple)}</td>
-        <td class="num mono">${reb}</td>
-      </tr>`;
-    }).join('');
-    const totSimple = pl.rows.reduce((x,r)=>x+r.simple,0);
-    let extra = '';
-    if(!pl.underCount) extra = 'Nessun ETF è sotto il range: il metodo ribilanciante non assegna nulla.';
-    else if(pl.scaled) extra = 'I soldi non bastano per portare tutti gli ETF sotto range al target: gli importi ribilancianti sono ridotti in proporzione.';
-    else if(pl.leftover > 1) extra = `Il metodo ribilanciante lascia ${fmtEUR.format(pl.leftover)} non assegnati: gli ETF sotto range hanno già raggiunto il target. Puoi destinarli con il metodo semplice.`;
-    return `<div class="table-scroll"><table class="inv-table">
-        <thead><tr><th>ETF</th><th style="text-align:center;">Stato</th><th class="num">Target tot.</th><th class="num">Semplice</th><th class="num">Ribilanciante</th></tr></thead>
-        <tbody>${rows}</tbody>
-        <tfoot><tr><td colspan="3" style="padding:8px 10px; font-weight:700;">Totale</td><td class="num mono" style="padding:8px 10px; font-weight:700;">${fmtEUR.format(totSimple)}</td><td class="num mono" style="padding:8px 10px; font-weight:700;">${fmtEUR.format(pl.allocated)}</td></tr></tfoot>
-      </table></div>
-      <div class="label-note" style="padding-left:2px;"><strong>Semplice</strong>: INVESTI € × target tot. di ogni ETF, senza guardare cosa hai già. <strong>Ribilanciante</strong>: mostrato solo per gli ETF fuori range; per i sottopesati è quanto serve per portarli al target sul portafoglio dopo l'investimento (valore attuale + INVESTI €), per quelli sopra range non si compra nulla.${extra ? ' '+extra : ''}</div>`;
-  },
-  etfDyn(inv, a){
-    // celle "calcolate" della riga ETF: target sul totale (target in classe x target classe), peso attuale, range, stato, importo
-    const w = a.totalValue ? inv.currentValue/a.totalValue*100 : 0;
-    const weight = `<strong>${this.fmtPct1(w)}</strong>`;
-    const eff = this.etfEffTarget(inv);
-    if(eff===null) return { eff:'—', weight, range:'—', status:'—', move:'—' };
-    const st = this.rebalStatus(w, eff, false);
-    return {
-      eff: eff>0 ? `<strong>${this.fmtPct1(eff)}</strong>` : '—',
-      weight,
-      range: this.rbRange(st),
-      status: this.rbBadge(st.state, true),
-      move: (st.state==='over'||st.state==='under') ? this.rbMove(w, eff, a.totalValue) : '—'
-    };
-  },
-  etfNotesHTML(){
-    return `<div class="label-note" style="padding-left:2px;">Target sul totale = target in classe × target della classe (es. 45% di una classe al 60% = 27%). Il range usa lo shift relativo su quel valore; il peso attuale è sul valore totale del portafoglio. ▲ Sopra = sovrappesato (vendi/non versare), ▼ Sotto = sottopesato (compra).</div>`;
-  },
-  etfSecInfoHTML(cls){
-    const a = this.allocationData(), T = this.allocTargets();
-    const row = a.rows.find(r=>r.cls===cls);
-    const list = this.investments.filter(i=>i.assetClass===cls);
-    const sum = list.reduce((x,i)=>x+(i.targetPct||0),0);
-    const sumBadge = !list.length ? '' : (Math.abs(sum-100)<=0.05
-      ? '<span class="rb-badge ok">Somma target 100%</span>'
-      : `<span class="rb-badge out">Somma target ${this.fmtPct1(sum)} ≠ 100%</span>`);
-    return `<span class="stat-sub">${fmtEUR0.format(row.value)} · attuale ${this.fmtPct1(row.pct)} · target ${this.fmtPct1(T[cls])}</span> ${sumBadge}`;
-  },
-  etfRowHTML(inv, aData){
-    const g = inv.currentValue - inv.invested;
-    const gp = inv.invested ? (g/inv.invested*100) : 0;
-    const d = this.etfDyn(inv, aData);
-    const gc = g>=0 ? 'gain-pos' : 'gain-neg';
-    const unassigned = !inv.assetClass;
-    const statusCell = unassigned
-      ? `<select aria-label="Classe di attivo" onchange="App.setAssetClass('${inv.id}', this.value)"><option value="">— classe —</option>${ASSET_CLASSES.map(c=>`<option value="${c}">${c}</option>`).join('')}</select>`
-      : d.status;
-    return `
-      <div class="etf-row">
-        <input class="etf-name" aria-label="Nome ETF" value="${inv.name.replace(/"/g,'&quot;')}" onchange="App.updateInvestment('${inv.id}','name',this.value)">
-        <input class="mono tcl" aria-label="Target dentro la classe (percentuale)" title="Target dentro la classe (%)" value="${String(inv.targetPct||0).replace('.',',')}" onchange="App.setInvTarget('${inv.id}', this.value)">
-        <input class="mono" aria-label="Investito" value="${inv.invested}" onchange="App.updateInvestment('${inv.id}','invested',this.value); App.refreshInvTotals();">
-        <input class="mono" aria-label="Valore attuale" value="${inv.currentValue}" onchange="App.updateInvestment('${inv.id}','currentValue',this.value); App.refreshInvTotals();">
-        <span class="r mono ${gc}" id="inv-gainbox-${inv.id}"><span id="inv-gain-${inv.id}">${g>=0?'+':''}${fmtEUR0.format(g)}</span> <span id="inv-gainpct-${inv.id}">(${fmtPct(gp)})</span></span>
-        <span class="c mono" id="inv-weight-${inv.id}">${d.weight}</span>
-        <span class="c mono" id="inv-range-${inv.id}">${d.range}</span>
-        <span class="c" id="inv-status-${inv.id}">${statusCell}</span>
-        <span class="c mono" id="inv-eff-${inv.id}">${d.eff}</span>
-        <span class="r mono" id="inv-move-${inv.id}">${d.move}</span>
-        <button class="btn danger" title="Rimuovi ETF" aria-label="Rimuovi ETF" onclick="App.removeInvestment('${inv.id}')">✕</button>
-      </div>`;
-  },
-  etfSectionsHTML(aData){
-    const head = `<div class="etf-head"><div>ETF</div><div class="r" title="Target dentro la classe (%)">Cl. %</div><div class="r">Investito</div><div class="r">Valore</div><div class="r">Guadagno</div><div class="c">Peso</div><div class="c">Range</div><div class="c">Stato</div><div class="c">Target tot.</div><div class="r">Per tornare</div><div></div></div>`;
-    const sec = (cls)=>{
-      const list = this.investments.filter(i=>(i.assetClass||'')===cls);
-      const color = ASSET_CLASS_COLORS[cls];
-      if(cls===''){
-        if(!list.length) return '';
-        return `<div class="etf-sec">
-          <div class="etf-sec-head"><span class="alloc-dot" style="background:${color};"></span><strong>Da assegnare a una classe</strong><span class="stat-sub">scegli la classe nel menu della colonna Stato: l'ETF si sposta nella sua sezione</span></div>
-          ${list.map(i=>this.etfRowHTML(i, aData)).join('')}
-        </div>`;
-      }
-      return `<div class="etf-sec">
-        <div class="etf-sec-head">
-          <span class="alloc-dot" style="background:${color};"></span><strong style="font-family:'Fraunces',serif; font-size:15px;">${cls}</strong>
-          <span id="inv-sec-info-${cls}">${this.etfSecInfoHTML(cls)}</span>
-          <span class="spacer"></span>
-          <button class="btn ghost small" onclick="App.addInvestment('${cls}')">+ Aggiungi ETF</button>
-        </div>
-        ${list.length ? list.map(i=>this.etfRowHTML(i, aData)).join('') : `<div class="etf-empty">Nessun ETF in questa classe.</div>`}
-      </div>`;
-    };
-    return `<div class="etf-scroll"><div class="etf-inner">${head}${[...ASSET_CLASSES,''].map(sec).join('')}</div></div>`;
-  },
-  allocChartData(){
-    const a = this.allocationData(), T = this.allocTargets();
-    const pieRows = a.rows.filter(r=>r.value>0);
-    return {
-      pieLabels: pieRows.map(r=>r.label),
-      pieValues: pieRows.map(r=>r.value),
-      pieColors: pieRows.map(r=>ASSET_CLASS_COLORS[r.cls]),
-      barLabels: ASSET_CLASSES,
-      current: ASSET_CLASSES.map(c=>a.rows.find(r=>r.cls===c).pct),
-      target: ASSET_CLASSES.map(c=>T[c]),
-      colors: ASSET_CLASSES.map(c=>ASSET_CLASS_COLORS[c])
-    };
-  },
+
   /* ---------------- TRASFERIMENTI VERSO SCALABLE -> ripartizione sugli ETF ---------------- */
   isScalableWallet(wallet){
     return displayWalletName(wallet||'').toUpperCase().includes('SCALABLE');
@@ -2411,45 +2228,6 @@ const App = {
     if(!str) return 0;
     const n = str.includes(',') ? parseFloat(str.replace(/[.\s]/g,'').replace(',','.')) : (/^-?\d{1,3}(\.\d{3})+$/.test(str) ? parseFloat(str.replace(/\./g,'')) : parseFloat(str));
     return Number.isFinite(n) ? n : 0;
-  },
-  defaultSplit(amount){
-    // ripartisce l'importo in proporzione al TARGET TOT di ogni ETF (normalizzato: la somma dei target tot puo' non essere esattamente 100)
-    const list = this.investments.map(i=>({ id:i.id, eff:this.etfEffTarget(i)||0 })).filter(x=>x.eff>0);
-    const split = {};
-    this.investments.forEach(i=> split[i.id] = 0);
-    const tot = list.reduce((x,e)=>x+e.eff,0);
-    if(!tot || !amount) return split;
-    const cents = Math.round(amount*100);
-    let acc = 0;
-    list.forEach((e,idx)=>{
-      const c = idx===list.length-1 ? cents-acc : Math.round(cents*e.eff/tot);
-      acc += c;
-      split[e.id] = c/100;
-    });
-    return split;
-  },
-  collectScalableTransfers(prevKeys){
-    // dopo un import: mette "in attesa" i trasferimenti sul portafoglio Scalable (entrata e uscita) che non erano
-    // gia' presenti prima dell'import e non sono mai stati proposti: lo storico gia' caricato resta contabilizzato
-    const processedBefore = new Set(this.processedTransfers);
-    let n = 0;
-    this.transactions.forEach(t=>{
-      if(t.manual || !this.isScalableWallet(t.wallet)) return;
-      const isIn = t.type==='Incoming Transfer' && t.amount>0;
-      const isOut = t.type==='Outgoing Transfer' && t.amount<0;
-      if(!isIn && !isOut) return;
-      const key = this.txKey(t);
-      if(prevKeys.has(key) || processedBefore.has(key)) return;
-      this.processedTransfers.push(key);
-      this.pendingInvestments.push({ id:uid(), key, date:t.dateStr, amount:t.amount, note:t.note||'', dir: isIn?'in':'out', mode:'ignore' });
-      n++;
-    });
-    if(n){
-      this.pendingInvestments.sort((a,b)=> a.date.localeCompare(b.date));
-      this.pendingSplit = this.defaultSplit(this.pendNet());
-      if(!this.pendingOut) this.pendingOut = {};
-    }
-    return n;
   },
   esc(v){ return String(v==null?'':v).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); },
 
@@ -2491,203 +2269,6 @@ const App = {
     if(this._catDD) this._catDD.remove();
     this._catDD = null; this._catDDInput = null; this._catDDFilter = null;
   },
-  pendDir(p){ return p.dir || (p.amount<0 ? 'out' : 'in'); },
-  pendNet(){ return this.pendIncTotal(); }, // solo le entrate verso Scalable vengono ripartite in automatico
-  pendIncTotal(){ return this.pendingInvestments.filter(p=>this.pendDir(p)==='in').reduce((x,p)=>x+p.amount,0); },
-  pendOutTotal(){ return this.pendingInvestments.filter(p=>this.pendDir(p)==='out').reduce((x,p)=>x+Math.abs(p.amount),0); },
-  ensurePendSplit(){
-    if(!this.pendingSplit || typeof this.pendingSplit!=='object') this.pendingSplit = this.defaultSplit(this.pendNet());
-    if(!this.pendingOut || typeof this.pendingOut!=='object') this.pendingOut = {};
-  },
-  pendEtfList(){
-    return ASSET_CLASSES.flatMap(c => this.investments.filter(i=>i.assetClass===c));
-  },
-  pendAssigned(){
-    return this.pendEtfList().reduce((x,e)=> x + (Number(this.pendingSplit[e.id])||0), 0);
-  },
-  pendOutAssigned(){
-    return this.pendEtfList().reduce((x,e)=> x + (Number(this.pendingOut[e.id])||0), 0);
-  },
-  resetPendSplit(){
-    this.pendingSplit = this.defaultSplit(this.pendNet());
-    this.saveData();
-    this.render();
-  },
-  setPendAmount(invId, value){
-    this.ensurePendSplit();
-    this.pendingSplit[invId] = Math.round(this.parseNum(value)*100)/100;
-    this.saveData();
-    this.refreshInvReview();
-  },
-  setPendOut(invId, value){
-    this.ensurePendSplit();
-    this.pendingOut[invId] = Math.round(Math.abs(this.parseNum(value))*100)/100; // si inserisce l'importo sottratto come numero positivo
-    this.saveData();
-    this.refreshInvReview();
-  },
-  diffBadge(assigned, total){
-    const diff = Math.round((assigned-total)*100)/100;
-    return Math.abs(diff) < 0.005
-      ? '<span class="rb-badge ok">Quadra col totale</span>'
-      : `<span class="rb-badge out">Differenza ${diff>0?'+':''}${fmtEUR.format(diff)}</span>`;
-  },
-  refreshInvReview(){
-    this.pendEtfList().forEach(e=>{
-      const add = Number(this.pendingSplit[e.id])||0, out = Number(this.pendingOut[e.id])||0;
-      const el = document.getElementById('pend-after-'+e.id);
-      if(el) el.textContent = fmtEUR.format(e.invested + add - out);
-      const mk = document.getElementById('pend-outmark-'+e.id);
-      if(mk) mk.textContent = out ? ' −'+fmtEUR.format(out) : '';
-    });
-    const aEl = document.getElementById('pend-assigned'); if(aEl) aEl.textContent = fmtEUR.format(this.pendAssigned());
-    const dEl = document.getElementById('pend-diff'); if(dEl) dEl.innerHTML = this.diffBadge(this.pendAssigned(), this.pendNet());
-    const oEl = document.getElementById('pend-out-assigned'); if(oEl) oEl.textContent = fmtEUR.format(this.pendOutAssigned());
-    const odEl = document.getElementById('pend-out-diff'); if(odEl) odEl.innerHTML = this.diffBadge(this.pendOutAssigned(), this.pendOutTotal());
-  },
-  confirmPending(){
-    this.ensurePendSplit();
-    const msgs = [];
-    if(this.pendNet()>0 && Math.abs(this.pendAssigned()-this.pendNet()) >= 0.005) msgs.push(`ripartizione dei versamenti: assegnati ${fmtEUR.format(this.pendAssigned())} su ${fmtEUR.format(this.pendNet())}`);
-    if(this.pendOutTotal()>0 && Math.abs(this.pendOutAssigned()-this.pendOutTotal()) >= 0.005) msgs.push(`prelievi: assegnati ${fmtEUR.format(this.pendOutAssigned())} su ${fmtEUR.format(this.pendOutTotal())}`);
-    if(msgs.length){
-      this.askConfirm(`Le somme non quadrano (${msgs.join('; ')}). Confermare comunque?`, 'Conferma comunque', ()=>this._applyPending());
-      return;
-    }
-    this._applyPending();
-  },
-  _applyPending(){
-    this.pendEtfList().forEach(e=>{
-      const delta = (Number(this.pendingSplit[e.id])||0) - (Number(this.pendingOut[e.id])||0);
-      if(delta) e.invested = Math.round((e.invested+delta)*100)/100;
-    });
-    this.pendingInvestments = [];
-    this.pendingSplit = null;
-    this.pendingOut = null;
-    this.saveData();
-    this.renderSidebar();
-    this.navigate('investments');
-    this.showToast('Importi aggiornati negli ETF. Aggiorna ora il valore di ogni ETF e premi "Salva aggiornamento".');
-  },
-  discardPending(){
-    this.askConfirm('Scartare tutti i trasferimenti in attesa? Non verranno applicati agli ETF e non saranno più riproposti.', 'Scarta tutto', ()=>this._doDiscard());
-  },
-  _doDiscard(){
-    this.pendingInvestments = [];
-    this.pendingSplit = null;
-    this.pendingOut = null;
-    this.saveData();
-    this.renderSidebar();
-    this.navigate('investments');
-  },
-  renderInvReview(){
-    const main = document.getElementById('main');
-    const pend = this.pendingInvestments;
-    if(!pend.length){
-      main.innerHTML = `
-        <div class="page-head"><div class="eyebrow">Investimenti</div><h1 class="page-title">Nessun trasferimento da confermare</h1></div>
-        <div class="empty-state"><div class="display">Tutto in ordine</div>
-          <p>Quando importi un CSV con nuovi trasferimenti da/verso il portafoglio Scalable, li trovi qui, per controllarli prima di aggiungerli agli ETF.</p>
-          <button class="btn" onclick="App.navigate('investments')">Vai a Investimenti</button></div>`;
-      return;
-    }
-    this.ensurePendSplit();
-    const etfs = this.pendEtfList();
-    const incoming = pend.filter(p=>this.pendDir(p)==='in');
-    const outgoing = pend.filter(p=>this.pendDir(p)==='out');
-    const incTotal = this.pendIncTotal(), outTotal = this.pendOutTotal(), net = this.pendNet();
-    const fmtDate = (ds)=> new Date(ds+'T00:00:00').toLocaleDateString('it-IT',{ day:'2-digit', month:'short', year:'numeric' });
-    const listRows = (arr, sign)=> arr.map(p=>`<div class="ydb-row"><span>${fmtDate(p.date)}${p.note?' · '+this.esc(p.note):''}</span><span class="mono">${sign}${fmtEUR.format(Math.abs(p.amount))}</span></div>`).join('');
-    const proposal = this.defaultSplit(net);
-
-    const outEtfRows = etfs.map(e=>{
-      const val = Number(this.pendingOut[e.id]) || 0;
-      return `<tr>
-        <td><span class="alloc-dot" style="background:${ASSET_CLASS_COLORS[e.assetClass]};"></span><strong>${this.esc(e.name)}</strong></td>
-        <td class="num mono" style="color:var(--ink-soft);">${fmtEUR.format(e.invested)}</td>
-        <td class="num"><input class="mono" style="width:120px;" aria-label="Importo sottratto a ${this.esc(e.name)}" value="${String(val).replace('.',',')}" onchange="App.setPendOut('${e.id}', this.value)"></td>
-      </tr>`;
-    }).join('');
-
-    const etfRows = etfs.map(e=>{
-      const eff = this.etfEffTarget(e) || 0;
-      const add = Number(this.pendingSplit[e.id]) || 0;
-      const out = Number(this.pendingOut[e.id]) || 0;
-      return `<tr>
-        <td><span class="alloc-dot" style="background:${ASSET_CLASS_COLORS[e.assetClass]};"></span><strong>${this.esc(e.name)}</strong></td>
-        <td class="num mono">${eff>0 ? this.fmtPct1(eff) : '—'}</td>
-        <td class="num mono">${fmtEUR.format(proposal[e.id]||0)}</td>
-        <td class="num"><input class="mono" style="width:120px;" aria-label="Importo da aggiungere a ${this.esc(e.name)}" value="${String(add).replace('.',',')}" onchange="App.setPendAmount('${e.id}', this.value)"></td>
-        <td class="num mono" style="color:var(--ink-soft);">${fmtEUR.format(e.invested)}<span id="pend-outmark-${e.id}" style="color:var(--brick); font-weight:700;">${out ? ' −'+fmtEUR.format(out) : ''}</span></td>
-        <td class="num mono"><strong id="pend-after-${e.id}">${fmtEUR.format(e.invested + add - out)}</strong></td>
-      </tr>`;
-    }).join('');
-
-    main.innerHTML = `
-      <div class="page-head">
-        <div class="eyebrow">Investimenti</div>
-        <h1 class="page-title">Trasferimenti Scalable da confermare</h1>
-        <div class="page-desc">Dall'import risultano <strong>${pend.length}</strong> ${pend.length===1?'movimento':'movimenti'} in trasferimento da/verso Scalable Capital. I versamenti sono ripartiti tra gli ETF in proporzione al Target tot.; per i prelievi indichi tu quanto hai sottratto a ciascun ETF. Alla conferma gli importi vengono applicati al campo "Investito"; il campo "Valore" resta da aggiornare a mano.</div>
-      </div>
-
-      <div class="grid grid-3">
-        <div class="card"><div class="stat-label">Trasferiti verso Scalable</div><div class="stat-value mono">${fmtEUR.format(incTotal)}</div><div class="stat-sub">${incoming.length} ${incoming.length===1?'trasferimento':'trasferimenti'}</div></div>
-        <div class="card"><div class="stat-label">Prelevati da Scalable</div><div class="stat-value mono ${outTotal?'brick':''}">${outTotal?'−':''}${fmtEUR.format(outTotal)}</div><div class="stat-sub">${outgoing.length ? outgoing.length+(outgoing.length===1?' trasferimento':' trasferimenti')+' in uscita' : 'nessun prelievo rilevato'}</div></div>
-        <div class="card"><div class="stat-label">Versamenti da ripartire</div><div class="stat-value mono" style="color:var(--green)">${fmtEUR.format(net)}</div><div class="stat-sub">tra gli ETF, secondo Target tot.</div></div>
-      </div>
-
-      ${incoming.length ? `<details class="card" style="margin-top:18px;"><summary style="cursor:pointer; font-size:13.5px; font-weight:600;">Dettaglio dei trasferimenti in entrata <span class="caret">▸</span></summary><div style="margin-top:10px;">${listRows(incoming,'')}</div></details>` : ''}
-
-      ${outgoing.length ? `
-      <div class="section-title"><span>Prelievi da Scalable</span><span class="rule"></span></div>
-      <div class="card">
-        <div style="margin-bottom:12px;">${listRows(outgoing,'−')}</div>
-        ${etfs.length ? `
-        <div class="stat-label" style="margin:14px 0 8px;">Quanto hai sottratto a ciascun ETF</div>
-        <div class="table-scroll"><table class="inv-table">
-          <thead><tr><th>ETF</th><th class="num">Investito ora</th><th class="num">Importo sottratto</th></tr></thead>
-          <tbody>${outEtfRows}</tbody>
-          <tfoot><tr><td colspan="2" style="padding:8px 10px; font-weight:700;">Totale sottratto · prelevato ${fmtEUR.format(outTotal)}</td><td class="num" style="padding:8px 10px;"><strong class="mono" id="pend-out-assigned">${fmtEUR.format(this.pendOutAssigned())}</strong> <span id="pend-out-diff">${this.diffBadge(this.pendOutAssigned(), outTotal)}</span></td></tr></tfoot>
-        </table></div>` : ''}
-      </div>` : ''}
-
-      <div class="section-title"><span>Ripartizione dei versamenti</span><span class="rule"></span></div>
-      ${etfs.length ? '' : `<div class="planned-warning">Nessun ETF assegnato a una classe: imposta classi e Target % in Investimenti, poi torna qui a ripartire gli importi.</div>`}
-      <div class="card">
-        ${etfs.length ? `
-        <div class="table-scroll"><table class="inv-table">
-          <thead><tr><th>ETF</th><th class="num">Target tot.</th><th class="num">Proposta</th><th class="num">Importo da aggiungere</th><th class="num">Investito ora</th><th class="num">Investito dopo</th></tr></thead>
-          <tbody>${etfRows}</tbody>
-          <tfoot><tr><td colspan="3" style="padding:8px 10px; font-weight:700;">Totale assegnato · da ripartire ${fmtEUR.format(net)}</td><td class="num mono" style="padding:8px 10px; font-weight:700;" id="pend-assigned">${fmtEUR.format(this.pendAssigned())}</td><td colspan="2" class="num" style="padding:8px 10px;" id="pend-diff">${this.diffBadge(this.pendAssigned(), net)}</td></tr></tfoot>
-        </table></div>
-        <div class="label-note" style="padding-left:2px;">La proposta segue il Target tot. di ogni ETF. Puoi modificare gli importi a mano (per esempio dopo un ribilanciamento). In "Investito ora" i prelievi inseriti sopra compaiono in rosso; "Investito dopo" = investito ora + importo aggiunto − importo sottratto. Se le somme non quadrano ti chiedo conferma.</div>` : ''}
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
-          <button class="btn small" onclick="App.confirmPending()" ${etfs.length?'':'disabled'}>Conferma e aggiorna gli ETF</button>
-          <button class="btn ghost small" onclick="App.resetPendSplit()" ${etfs.length?'':'disabled'}>↺ Ripristina proposta</button>
-          <button class="btn ghost small" onclick="App.navigate('investments')">Decidi dopo</button>
-          <button class="btn danger" onclick="App.discardPending()">Scarta tutto</button>
-        </div>
-      </div>
-    `;
-  },
-
-  removeInvestment(id){
-    this.investments = this.investments.filter(i=>i.id!==id);
-    this.saveData();
-    this.render();
-  },
-  commitInvestments(){
-    const totalInvested = this.investments.reduce((s,i)=>s+i.invested,0);
-    const totalValue = this.investments.reduce((s,i)=>s+i.currentValue,0);
-    const date = localYmd(new Date());
-    const snap = { date, totalInvested, totalValue, items: this.investments.map(i=>({ id:i.id, name:i.name, assetClass:i.assetClass||'', invested:i.invested, value:i.currentValue })) };
-    const k = this.invHistory.findIndex(h=>h.date===date);
-    if(k>=0) this.invHistory[k] = snap; else this.invHistory.push(snap); // stesso giorno: sostituisce lo scatto
-    this.invHistory.sort((a,b)=>a.date.localeCompare(b.date));
-    this.saveData();
-    this.render();
-    this.showToast('Investimenti aggiornati e salvati.');
-  },
-
   /* ================= RENDER: SIDEBAR ================= */
   renderSidebar(){
     const sb = document.getElementById('sidebar');
@@ -2744,9 +2325,6 @@ const App = {
         <button class="nav-item ${this.route.page==='investments'?'active':''}" ${this.route.page==='investments'?'aria-current="page"':''} onclick="App.navigate('investments')">
           <span class="num">·</span><span>Investimenti</span>
         </button>
-        ${this.pendingInvestments.length ? `<button class="nav-item ${this.route.page==='invreview'?'active':''}" ${this.route.page==='invreview'?'aria-current="page"':''} onclick="App.navigate('invreview')">
-          <span class="num">!</span><span>Da confermare (${this.pendingInvestments.length})</span>
-        </button>` : ''}
       </div>
       <div class="nav-label">Registro mensile</div>
       <div class="month-legend"><span class="dot dot-data"></span> movimenti &nbsp; <span class="dot dot-planned"></span> previsti &nbsp; <span class="dot dot-empty"></span> vuoto</div>
@@ -2788,7 +2366,7 @@ const App = {
     Object.values(this.charts).forEach(c=>{ try{c.destroy();}catch(e){} });
     this.charts = {};
     const main = document.getElementById('main');
-    if(!this.transactions.length && this.route.page!=='import' && this.route.page!=='month' && this.route.page!=='investments' && this.route.page!=='yearly' && this.route.page!=='invreview'){
+    if(!this.transactions.length && this.route.page!=='import' && this.route.page!=='month' && this.route.page!=='investments' && this.route.page!=='yearly'){
       main.innerHTML = this.emptyStateHTML();
       return;
     }
@@ -2796,7 +2374,6 @@ const App = {
     if(this.route.page==='month') return this.renderMonth(this.route.month);
     if(this.route.page==='yearly') return this.renderYearly();
     if(this.route.page==='investments') return this.renderInvestments();
-    if(this.route.page==='invreview') return this.renderInvReview();
     if(this.route.page==='import') return this.renderImport();
   },
 
@@ -2826,7 +2403,7 @@ const App = {
     try{
       if(this.charts[key]){ try{ this.charts[key].destroy(); }catch(e){} delete this.charts[key]; } // riapertura/re-mount: la canvas va liberata prima
       const ys = config.options && config.options.scales && config.options.scales.y;
-      if(ys) ys.afterFit = (sc)=>{ sc.width = Math.max(sc.width, 60); }; // spazio minimo per i numeri, anche se il font non e' ancora caricato
+      if(ys && !ys.afterFit) ys.afterFit = (sc)=>{ sc.width = Math.max(sc.width, 60); }; // spazio minimo per i numeri, anche se il font non e' ancora caricato
       this.charts[key] = new Chart(canvas, config);
     }catch(err){
       console.error('Errore nella creazione del grafico "'+key+'":', err);
@@ -2972,6 +2549,13 @@ const App = {
       }
       if(this.isInvestmentWallet(w)){
         const ist = this.investedWalletStats(w);
+        const scal = this.useInvFor(w) ? this.invSummary() : null;
+        const scalHTML = scal ? `<div class="goal-inline">
+              <div class="goal-inline-row"><span class="stat-sub">Investito</span><span class="mono" style="font-weight:600;">${fmtEUR.format(scal.tInv)}</span></div>
+              <div class="goal-inline-row"><span class="stat-sub">Guadagno/perdita</span><span class="mono ${scal.gp>=0?'gain-pos':'gain-neg'}">${scal.gp>=0?'+':'−'}${fmtEUR.format(Math.abs(scal.gp))}${scal.cost>0 ? ' ('+fmtPct(scal.gp/scal.cost*100)+')' : ''}</span></div>
+              <div class="goal-inline-row"><span class="stat-sub">Costi totali</span><span class="mono gain-neg">${scal.costs ? '−'+fmtEUR.format(scal.costs) : fmtEUR.format(0)}</span></div>
+              <div class="goal-inline-row"><span class="stat-sub">Dati al ${fmtDateIT(this.inv.asOf||'')}</span></div>
+            </div>` : '';
         investedCards.push(`
           <div class="wallet-card">
             <div class="wname">${displayWalletName(w)}</div>
@@ -2980,7 +2564,7 @@ const App = {
               <span class="delta ${d>=0?'pos':'neg'}">${d>=0?'▲':'▼'} ${fmtEUR0.format(Math.abs(d))}</span>
               <span class="stat-sub" style="margin-left:6px;">${share.toFixed(1).replace('.',',')}% del patrimonio</span>
             </div>
-            <div class="goal-inline">
+            ${scal ? scalHTML : `<div class="goal-inline">
               <div class="goal-inline-row">
                 <span class="stat-sub">Investito</span>
                 <span class="mono" style="font-weight:600;">${fmtEUR.format(ist.invested)}</span>
@@ -2993,7 +2577,7 @@ const App = {
                 <span class="stat-sub">Tasse</span>
                 <span class="mono gain-neg">${ist.taxes ? '−'+fmtEUR.format(Math.abs(ist.taxes)) : fmtEUR.format(0)}</span>
               </div>
-            </div>
+            </div>`}
           </div>`);
       } else {
         liquidOtherCards.push(walletCardHTML(displayWalletName(w), bal, d, share));
@@ -3280,6 +2864,25 @@ const App = {
       const txs = this.transactions.filter(t=>t.wallet===w && t.ym===ym);
       const net = txs.reduce((s2,t)=>s2+t.amount,0);
       const op = this.isOperational(w);
+      const sm = this.useInvFor(w) ? this.invMonthStats(ym) : null;
+      if(sm){
+        const sg = (v)=> (v>=0?'+':'−')+fmtEUR.format(Math.abs(v)), cl = (v)=> v>0.004 ? 'gain-pos' : (v<-0.004 ? 'gain-neg' : '');
+        const open = !!this.scalOpen[ym];
+        if(!open) return `<div class="wm-row">
+        <span class="wm-badge ${op?'op':'nonop'}">${op?'Operativo':'Escluso'}</span>
+        <span class="wm-name">${displayWalletName(w)}</span>
+        <button class="wm-amt wm-tot-btn mono ${cl(sm.tot)}" aria-expanded="false" onclick="App.toggleScalMonth('${ym}')">${sg(sm.tot)}<span class="caret">▸</span></button>
+      </div>`;
+        return `<div class="wm-row wm-has-multi">
+        <span class="wm-badge ${op?'op':'nonop'}">${op?'Operativo':'Escluso'}</span>
+        <span class="wm-name">${displayWalletName(w)}</span>
+        <span class="wm-multi mono">
+          <span><b>Versati</b>${sg(sm.inv)}</span>
+          <span class="${cl(sm.market)}"><b>Variazione</b>${sg(sm.market)}</span>
+          <button class="wm-tot wm-tot-btn ${cl(sm.tot)}" aria-expanded="true" onclick="App.toggleScalMonth('${ym}')"><b>Totale</b>${sg(sm.tot)}<span class="caret" style="transform:rotate(90deg); display:inline-block;">▸</span></button>
+        </span>
+      </div>`;
+      }
       return `<div class="wm-row">
         <span class="wm-badge ${op?'op':'nonop'}">${op?'Operativo':'Escluso'}</span>
         <span class="wm-name">${displayWalletName(w)}</span>
@@ -3398,6 +3001,8 @@ const App = {
           </div>
         </div>
       </div>
+
+      ${this.rimborsatiHTML(this.monthTx(ym), 'm'+ym, '')}
 
       ${(s.transferIn||s.transferOut||this.cashWithdrawnIn(ym)>0) ? `
       <div class="section-title"><span>Trasferimenti</span><span class="rule"></span></div>
@@ -3785,6 +3390,8 @@ const App = {
             ${y.labelTotalsExpense.length ? y.labelTotalsExpense.map(labelRow).join('') : '<div class="stat-sub" style="padding:10px 2px;">Nessuna uscita etichettata.</div>'}
           </div>
         </div>
+
+        ${this.rimborsatiHTML(this.transactions.filter(t=>t.ym.startsWith(String(activeYear))), 'y'+activeYear, 'somma di tutti i mesi del '+activeYear)}
       `;
 
     main.innerHTML = `
@@ -3804,202 +3411,409 @@ const App = {
     this.render();
   },
 
-  /* ================= RENDER: INVESTMENTS ================= */
-  renderInvestments(){
-    const main = document.getElementById('main');
-    const totalInvested = this.investments.reduce((s,i)=>s+i.invested,0);
-    const totalValue = this.investments.reduce((s,i)=>s+i.currentValue,0);
-    const gain = totalValue-totalInvested;
-    const gainPct = totalInvested ? (gain/totalInvested*100) : 0;
-    const grossInvested = this.grossInvestedScalable();
-    const costsGap = grossInvested!==null ? grossInvested-totalInvested : 0;
-
-    const aData = this.allocationData();
-
-    main.innerHTML = `
-      <div class="page-head">
-        <div class="eyebrow">Investimenti</div>
-        <h1 class="page-title">Portafoglio ETF</h1>
-        <div class="page-desc">Inserisci a mano importo investito e valore attuale per ciascun ETF. Ogni volta che premi "Salva aggiornamento" viene registrato uno scatto nello storico, usato per il grafico dell'andamento.</div>
-      </div>
-
-      <div class="grid grid-3" style="align-items:stretch;">
-        <div class="card">
-          <div class="stat-label">Totale investito</div>
-          <div class="stat-value mono" id="inv-tot-invested">${fmtEUR.format(totalInvested)}</div>
-          ${grossInvested!==null ? `<div class="stat-sub" id="inv-tot-invested-gross">Versato lordo (Scalable): <strong class="mono">${fmtEUR.format(grossInvested)}</strong>${Math.abs(costsGap)>=0.005 ? ` · Commissioni/Costi: <strong class="mono" style="color:var(--brick);">${fmtEUR.format(costsGap)}</strong>` : ''}</div>` : ''}
-        </div>
-        <div class="card"><div class="stat-label">Valore attuale</div><div class="stat-value mono" id="inv-tot-value">${fmtEUR.format(totalValue)}</div></div>
-        <div class="card"><div class="stat-label">Guadagno / Perdita</div><div class="stat-value mono" style="color:${gain>=0?'var(--sage)':'var(--brick)'};" id="inv-tot-gain">${gain>=0?'+':''}${fmtEUR.format(gain)}</div><div class="stat-sub" id="inv-tot-gainpct"><strong style="color:${gain>=0?'var(--sage)':'var(--brick)'};">${fmtPct(gainPct)}</strong>${this.xirrHTML()}</div></div>
-      </div>
-
-      <div class="section-title"><span>Posizioni e ribilanciamento · ETF</span><span class="rule"></span></div>
-      <div class="card" style="padding:16px 14px;">
-        ${this.etfSectionsHTML(aData)}
-        <div id="inv-etf-notes" style="margin-top:14px;">${this.etfNotesHTML()}</div>
-        <div style="margin-top:14px;">
-          <button class="btn small" onclick="App.commitInvestments()">Salva aggiornamento</button>
-        </div>
-      </div>
-
-      <div class="section-title"><span>Ribilanciamento · classi</span><span class="rule"></span></div>
-      <div class="card">
-        <div class="stat-label" style="margin-bottom:8px;">Attuale vs target · per classe</div>
-        <div class="chart-wrap tall"><canvas id="chart-alloc-bar" role="img" aria-label="Grafico: allocazione attuale rispetto al target per classe"></canvas></div>
-        <div class="stat-sub" style="margin:6px 0 16px;">Barra piena = attuale · barra chiara = target</div>
-        <div id="inv-alloc">${this.allocationHTML()}</div>
-      </div>
-
-      <div class="section-title"><span>Andamento nel tempo</span><span class="rule"></span></div>
-      <div class="card">
-        ${this.invHistory.length>=2 ? `<div class="chart-wrap"><canvas id="chart-inv" role="img" aria-label="Grafico: andamento di valore e investito nel tempo"></canvas></div>` : `<div class="stat-sub" style="padding:6px 2px;">Servono almeno due aggiornamenti salvati per tracciare un andamento. Modifica i valori e premi "Salva aggiornamento" periodicamente.</div>`}
-      </div>
-
-      <div class="section-title"><span>Allocazione e parametri</span><span class="rule"></span></div>
-      <div class="card">
-        <div class="grid grid-2" style="align-items:center;">
-          <div>
-            <div class="stat-label" style="margin-bottom:6px;">Parametri</div>
-            <div class="field-row"><label>Quota azionaria (%) <span class="stat-sub">· il resto è obbligazionaria</span></label><input class="mono" aria-label="Quota azionaria (%)" value="${String(this.targetEquityPct).replace('.',',')}" onchange="App.setAllocParam('targetEquityPct', this.value)"></div>
-            <div class="field-row"><label>Quota alternativi (%) <span class="stat-sub">· riduce in proporzione le altre due</span></label><input class="mono" aria-label="Quota alternativi (%)" value="${String(this.targetAltPct).replace('.',',')}" onchange="App.setAllocParam('targetAltPct', this.value)"></div>
-            <div class="field-row"><label>Shift massimo (%) <span class="stat-sub">· relativo al target</span></label><input class="mono" aria-label="Shift massimo (%)" value="${String(this.maxShiftPct).replace('.',',')}" onchange="App.setAllocParam('maxShiftPct', this.value)"></div>
-            <div class="field-row"><label><strong>INVESTI €</strong> <span class="stat-sub">· quanto vuoi investire ora</span></label><input class="mono" aria-label="Importo da investire (euro)" value="${this.investAmount ? String(this.investAmount).replace('.',',') : ''}" placeholder="0" onchange="App.setInvestAmount(this.value)"></div>
-            <div class="stat-label" style="margin-top:14px;">Target risultanti</div>
-            <div class="alloc-targets" id="inv-alloc-derived">${this.allocDerivedHTML()}</div>
-          </div>
-          <div>
-            <div class="stat-label" style="margin-bottom:8px;">Allocazione attuale</div>
-            <div class="chart-wrap"><canvas id="chart-alloc-pie" role="img" aria-label="Grafico: allocazione attuale del portafoglio ETF"></canvas></div>
-          </div>
-        </div>
-        <div style="margin-top:18px; padding-top:14px; border-top:1px dashed var(--line-strong);">
-          <div class="stat-label" style="margin-bottom:10px;">Come ripartire l'investimento</div>
-          <div id="inv-invest-calc">${this.investCalcHTML()}</div>
-        </div>
-      </div>
-    `;
-
-    const cd = this.allocChartData();
-    this.mountChart('allocPie', 'chart-alloc-pie', {
-      type:'doughnut',
-      data:{ labels: cd.pieLabels, datasets:[{ data: cd.pieValues, backgroundColor: cd.pieColors, borderColor:'#FBF8F0', borderWidth:2 }] },
-      options:{
-        responsive:true, maintainAspectRatio:false, cutout:'55%',
-        plugins:{
-          legend:{ position:'bottom', labels:{ color:'#4A443A', font:{family:'Inter',size:12}, boxWidth:12 } },
-          tooltip:{ callbacks:{ label:(c)=>{ const tot = c.dataset.data.reduce((x,y)=>x+y,0); return `${c.label}: ${fmtEUR.format(c.parsed)} (${tot?(c.parsed/tot*100).toFixed(1).replace('.',','):0}%)`; } } },
-          datalabels:{
-            display:(ctx)=>{ const tot = ctx.dataset.data.reduce((x,y)=>x+y,0); return tot && (ctx.dataset.data[ctx.dataIndex]/tot) >= 0.04; },
-            color:(ctx)=> contrastTextColor(ctx.dataset.backgroundColor[ctx.dataIndex]),
-            font:{ family:'Inter', size:12, weight:700 },
-            formatter:(v, ctx)=>{ const tot = ctx.dataset.data.reduce((x,y)=>x+y,0); return tot ? Math.round(v/tot*100)+'%' : ''; }
-          }
-        }
-      }
+  /* ================= INVESTIMENTI V5.0: dati dal backup generato in chat (connettore Scalable) ================= */
+  inv: null, invParams: { az:60, alt:10, shift:25, goal:0, goalStart:0, goalRate:5, goalYears:10 }, invPeriod:'', invTax:true, invCompSel:'geo', costOpen:false, posOpen:false, pacOpen:false,
+  CLS: ['Azionario','Obbligazionario','Alternativi'],
+  CLS_COL: { Azionario:'#963C31', Obbligazionario:'#2D6A9F', Alternativi:'#C9A227' },
+  invRate(p){ const w = Math.min(1, Math.max(0, p.wl||0)); return 0.26*(1-w) + 0.125*w; },
+  invStats(){
+    const I = this.inv; if(!I || !Array.isArray(I.positions) || !I.positions.length) return null;
+    const P = I.positions; // costo reale per ETF dal backup: nessuna correzione qui; il realizzato delle vendite e' esposto a parte
+    const realized = Number.isFinite(I.realized) ? I.realized : 0;
+    const tot = P.reduce((s,p)=>s+p.value,0), cost = P.reduce((s,p)=>s+p.cost,0);
+    const byCls = {}; this.CLS.forEach(c=> byCls[c] = { value:0, cost:0, pos:[] });
+    P.forEach(p=>{ const c = byCls[p.cls] || (byCls[p.cls] = { value:0, cost:0, pos:[] }); c.value += p.value; c.cost += p.cost; c.pos.push(p); });
+    const rate = tot ? P.reduce((s,p)=>s+p.value*this.invRate(p),0)/tot : 0.26;
+    return { P, tot, cost, realized, byCls, rate, annual: P.reduce((s,p)=>s+p.value*(this.terOf(p)||0)/100,0) };
+  },
+  setInvParam(k, v){
+    const n = Math.max(0, this.parseNum(v)); this.invParams[k] = k==='shift' ? Math.min(100,n) : Math.min(100,n);
+    this.saveData(); this.render();
+  },
+  invClassTargets(){
+    // az = quota azionaria sulla parte NON alternativa (obbligazionario = resto); gli alternativi si sottraggono in proporzione a entrambi
+    const q = this.invParams, alt = Math.min(100, q.alt), az = Math.min(100, q.az), f = 1 - alt/100, r2 = (x)=> Math.round(x*100)/100;
+    return { Azionario: r2(az*f), Alternativi: r2(alt), Obbligazionario: r2(Math.max(0,100-az)*f) };
+  },
+  invPosTargets(S){
+    // target di ogni ETF in % sull'INTERO portafoglio = target nel comparto x target della classe
+    const tg = this.invClassTargets(), tp = this.invParams.posc || {}, m = {};
+    S.P.forEach(p=>{ if(tp[p.isin]!=null) m[p.isin] = tp[p.isin]*(tg[p.cls]||0)/100; });
+    return m;
+  },
+  invPac(S){
+    const pac = Math.max(0, this.investAmount||0), tp = this.invPosTargets(S);
+    const complete = S.P.length>0 && S.P.every(p=>tp[p.isin]!==undefined);
+    if(!(pac>0) || !complete) return { pac, ok:false, complete, rows:[] };
+    const sumT = S.P.reduce((x,p)=>x+tp[p.isin],0);
+    if(Math.abs(sumT-100)>0.5) return { pac, ok:false, complete, sumT, rows:[] };
+    const T = S.tot + pac;
+    const rows = S.P.map(p=>{ const t = tp[p.isin]/sumT*100, gap = t/100*T - p.value; return { p, t, cur: S.tot ? p.value/S.tot*100 : 0, simple: pac*t/100, gap }; });
+    const pos = rows.reduce((x,r)=>x+Math.max(0,r.gap),0); // somma dei vuoti positivi: sempre >= PAC
+    rows.forEach(r=>{ r.reb = pos>0 ? pac*Math.max(0,r.gap)/pos : 0; r.after = (r.p.value + r.reb)/T*100; });
+    rows.sort((a,b)=> this.CLS.indexOf(a.p.cls)-this.CLS.indexOf(b.p.cls) || b.p.value-a.p.value);
+    return { pac, ok:true, complete, sumT, rows };
+  },
+  terOf(p){ if(p.ter!=null) return p.ter; const m = (this.invParams.terM||{})[p.isin]; return m==null ? null : m; },
+  setInvTer(isin, v){
+    const m = this.invParams.terM || (this.invParams.terM = {});
+    if(String(v).trim()==='') delete m[isin]; else m[isin] = Math.max(0, this.parseNum(v));
+    this.saveData(); this.render();
+  },
+  setInvDur(isin, v){
+    const m = this.invParams.durM || (this.invParams.durM = {});
+    if(String(v).trim()==='') delete m[isin]; else m[isin] = Math.max(0, this.parseNum(v));
+    this.saveData(); this.render();
+  },
+  setInvGoal(k, v){
+    const n = Math.max(0, this.parseNum(v));
+    this.invParams[k] = k==='goalRate' ? Math.min(30,n) : (k==='goalYears' ? Math.min(60, Math.max(1,Math.round(n))) : n);
+    this.saveData(); this.render();
+  },
+  invTwr(){
+    // rendimento time-weighted NON annualizzato: Modified Dietz tra i punti della serie (flussi pesati per i giorni), concatenati geometricamente
+    const I = this.inv, ser = ((I && I.series) || []).filter(p=>p.d && Number.isFinite(p.val));
+    if(ser.length<2) return null;
+    const fl = (I.flows||[]).filter(f=>f.d && Number.isFinite(f.a)), day = (d)=> new Date(d+'T00:00:00Z').getTime()/864e5;
+    let g = 1, weak = 0;
+    for(let i=1;i<ser.length;i++){
+      const a = ser[i-1], b = ser[i], T = day(b.d)-day(a.d); if(!(T>0)) continue;
+      let net = 0, w = 0;
+      if(fl.length) fl.filter(f=>f.d>a.d && f.d<=b.d).forEach(f=>{ net += f.a; w += f.a*(T-(day(f.d)-day(a.d)))/T; });
+      else { net = (b.inv||0)-(a.inv||0); w = net/2; }
+      const den = a.val + w; if(!(den>0)) continue;
+      if(Math.abs(net) > a.val) weak++; // versamenti piu' grandi del capitale di partenza: la stima del mese e' meno precisa
+      g *= 1 + (b.val - a.val - net)/den;
+    }
+    return { v:g-1, weak, months:(day(ser[ser.length-1].d)-day(ser[0].d))/30.44 };
+  },
+  invGoal(S){
+    const q = this.invParams, goal = q.goal||0;
+    if(!(goal>0)) return { ok:false };
+    const pac = Math.max(0, this.investAmount||0), yrs = Math.max(1, Math.round(q.goalYears||10)), n = yrs*12, custom = (q.goalStart||0)>0, V0 = custom ? q.goalStart : S.tot, base = q.goalRate||0;
+    const scen = [base-2, base, base+2].map(r=>Math.max(0,r)).map(r=>{
+      const rm = Math.pow(1+r/100, 1/12)-1;
+      let v = V0; const path = [v];
+      for(let i=1;i<=n;i++){ v = v*(1+rm)+pac; path.push(v); }
+      let reach = V0>=goal ? 0 : null, w = V0;
+      if(reach===null) for(let i=1;i<=1200;i++){ w = w*(1+rm)+pac; if(w>=goal){ reach = i; break; } }
+      const end = path[n], invEnd = (custom ? V0 : S.cost) + pac*n, net = end - Math.max(0, end-invEnd)*S.rate;
+      const gr = Math.pow(1+rm, n), need = Math.max(0, rm>0 ? (goal - V0*gr)*rm/(gr-1) : (goal-V0)/n);
+      return { r, path, reach, end, net, need };
     });
-    this.mountChart('allocBar', 'chart-alloc-bar', {
-      type:'bar',
-      data:{
-        labels: cd.barLabels,
-        datasets:[
-          { label:'Attuale', data: cd.current, backgroundColor: cd.colors, borderRadius:3 },
-          { label:'Target', data: cd.target, backgroundColor: cd.colors.map(c=>c+'55'), borderColor: cd.colors, borderWidth:1.5, borderRadius:3 }
-        ]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        layout:{ padding:{ top:18 } },
-        plugins:{
-          legend:{ display:false },
-          tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${c.parsed.y.toFixed(1).replace('.',',')}%` } },
-          datalabels:{ display:true, anchor:'end', align:'top', color:'#211D16', font:{ family:'IBM Plex Mono', size:11, weight:600 },
-            formatter:(v)=> v>0 ? v.toFixed(1).replace('.',',')+'%' : '' }
-        },
-        scales:{
-          x:{ ticks:{ color:'#4A443A', font:{family:'Inter',size:12} }, grid:{ display:false } },
-          y:{ beginAtZero:true, ticks:{ color:'#4A443A', font:{family:'IBM Plex Mono',size:11}, callback:(v)=>v+'%' }, grid:{ color:'rgba(33,29,22,0.08)' } }
-        }
-      }
+    return { ok:true, goal, pac, yrs, n, scen, V0, custom, progress: goal ? V0/goal*100 : 0 };
+  },
+  invDurationHTML(S){
+    const bonds = S.P.filter(p=>p.cls==='Obbligazionario').sort((a,b)=>b.value-a.value);
+    if(!bonds.length) return '<div class="stat-sub">Nessun ETF obbligazionario in portafoglio.</div>';
+    const dmap = this.invParams.durM || {}, dm = (p)=> p.duration!=null ? p.duration : (dmap[p.isin]!=null ? dmap[p.isin] : null), f1 = (v)=> v.toFixed(1).replace('.',',');
+    const bt = bonds.reduce((x,p)=>x+p.value,0), have = bonds.filter(p=>dm(p)!=null), hv = have.reduce((x,p)=>x+p.value,0);
+    const avg = hv ? have.reduce((x,p)=>x+p.value*dm(p),0)/hv : null, cov = bt ? hv/bt*100 : 0;
+    const rows = bonds.map(p=>{
+      const w = bt ? p.value/bt*100 : 0, d = dm(p), tk = this.esc(p.ticker||p.short||p.name);
+      return `<div class="rank-row" style="cursor:default; grid-template-columns:minmax(70px,120px) 1fr 64px 96px;"><span class="rank-name"><strong class="mono">${tk}</strong></span><span class="rank-bar"><span style="width:${w}%; background:${this.CLS_COL.Obbligazionario};"></span></span><span class="rank-amt">${f1(w)}%</span>${p.duration!=null ? `<span class="rank-amt">${f1(d)} anni</span>` : `<input class="cat-input mono" style="width:90px; text-align:right;" aria-label="Duration ${tk} (anni)" placeholder="anni" value="${d==null?'':String(d).replace('.',',')}" onchange="App.setInvDur('${p.isin}', this.value)">`}</div>`;
+    }).join('');
+    const contrib = avg!=null ? avg*bt/S.tot : null, hit = avg!=null ? hv*avg/100 : null;
+    return `<div class="stat-label">Duration media · comparto obbligazionario</div>
+      <div class="stat-value mono" style="margin-bottom:4px;">${avg==null ? '—' : f1(avg)+' anni'}</div>
+      <div class="stat-sub">Media delle duration modificate degli ETF obbligazionari, pesata sul valore di ciascuno (pesi nel comparto qui sotto)${cov<99.5 ? ` · <strong style="color:var(--brick);">copertura dati ${f1(cov)}%</strong>: inserisci la duration mancante` : ''}.</div>
+      ${avg!=null ? `<div class="stat-sub">Contributo alla duration dell'intero portafoglio: <strong class="mono">${f1(contrib)} anni</strong> (obbligazionario = ${f1(bt/S.tot*100)}% del portafoglio).</div>
+      <div class="stat-sub">Sensibilità indicativa: se i tassi salgono di 1 punto percentuale il comparto perderebbe circa <strong class="mono">${f1(avg)}%</strong> (≈ −${fmtEUR0.format(hit)}); se scendono di 1 punto guadagnerebbe circa altrettanto.</div>` : ''}
+      <div class="rank-list" style="margin-top:12px;">${rows}</div>
+      <div class="label-note" style="padding-left:2px;">La duration modificata stima la variazione di prezzo per 1 punto di variazione dei tassi: è un'approssimazione valida per piccoli movimenti e non considera il rischio di credito dei singoli Stati. Per l'ETF indicizzato all'inflazione riguarda i tassi reali, quindi la sensibilità è meno diretta. Se il backup non contiene il campo <span class="mono">duration</span> di una posizione, lo inserisci a mano (factsheet dell'ETF) e resta salvato.</div>`;
+  },
+  setInvTarget(isin, v){
+    const pp = this.invParams.posc || (this.invParams.posc = {});
+    if(String(v).trim()==='') delete pp[isin]; else pp[isin] = Math.min(100, Math.max(0, this.parseNum(v)));
+    this.saveData(); this.render();
+  },
+  invXirr(S){
+    const I = this.inv, fl = (I.flows||[]).filter(f=>Number.isFinite(f.a)).map(f=>({ t:new Date(f.d+'T00:00:00Z').getTime()/864e5, a:-f.a })).sort((x,y)=>x.t-y.t);
+    if(fl.length<2 || !I.asOf) return null;
+    fl.push({ t:new Date(I.asOf+'T00:00:00Z').getTime()/864e5, a:S.tot });
+    const t0 = fl[0].t, npv = (r)=> fl.reduce((x,g)=> x + g.a/Math.pow(1+r,(g.t-t0)/365), 0);
+    let lo = -0.95, hi = 20; if(npv(lo)*npv(hi) > 0) return null;
+    for(let i=0;i<200;i++){ const mid = (lo+hi)/2; if(npv(lo)*npv(mid) <= 0) hi = mid; else lo = mid; }
+    return { v:(lo+hi)/2, months:(fl[fl.length-1].t - t0)/30.44 };
+  },
+  invRebalance(S){
+    const q = this.invParams, tg = this.invClassTargets();
+    const rows = this.CLS.map(c=>{
+      const cur = S.tot ? S.byCls[c].value/S.tot*100 : 0, t = tg[c], lo = t*(1-q.shift/100), hi = t*(1+q.shift/100);
+      return { c, cur, t, lo, hi, out: cur<lo?'sotto':(cur>hi?'sopra':'ok') };
     });
-
-    if(this.invHistory.length>=2){
-      this.mountChart('inv', 'chart-inv', {
-        type:'line',
-        data:{
-          labels: this.invHistory.map(h=>fmtDateIT(h.date)),
-          datasets:[
-            { label:'Valore attuale', data:this.invHistory.map(h=>h.totalValue), borderColor:'#A97F3F', backgroundColor:'rgba(169,127,63,0.1)', fill:true, tension:0.2, pointRadius:2, borderWidth:2.5 },
-            { label:'Totale investito', data:this.invHistory.map(h=>h.totalInvested), borderColor:'#5F7A67', borderDash:[4,3], fill:false, tension:0.2, pointRadius:2, borderWidth:2 },
-            { label:'Guadagno / Perdita', data:this.invHistory.map(h=>h.totalValue-h.totalInvested), borderColor:'#963C31', fill:false, tension:0.2, pointRadius:2, borderWidth:2 }
-          ]
-        },
-        options:{
-          responsive:true, maintainAspectRatio:false,
-          plugins:{ legend:{ position:'top', labels:{ color:'#4A443A', font:{family:'Inter',size:12} } }, tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${fmtEUR.format(c.parsed.y)}` } } },
-          scales:{
-            x:{ ticks:{ color:'#4A443A', font:{family:'IBM Plex Mono',size:11} }, grid:{display:false} },
-            y:{ ticks:{ color:'#4A443A', font:{family:'IBM Plex Mono',size:11}, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.08)' } }
-          }
-        }
-      });
+    return { rows };
+  },
+  invComp(S, kind){
+    const m = new Map();
+    S.P.forEach(p=>{
+      const w = S.tot ? p.value/S.tot : 0;
+      if(kind==='top') (p.top||[]).forEach(x=> m.set(x.n, (m.get(x.n)||0) + w*x.w));
+      else Object.entries(p[kind]||{}).forEach(([k,v])=> m.set(k, (m.get(k)||0) + w*v));
+    });
+    return Array.from(m.entries()).sort((a,b)=>b[1]-a[1]).slice(0,12);
+  },
+  invWaterfall(S){
+    const per = this.inv.periods || {}, keys = Object.keys(per); if(!keys.length){ this._wf = null; return ''; }
+    if(!per[this.invPeriod]) this.invPeriod = keys[0];
+    const d = per[this.invPeriod], g = (k)=> (d[k] && d[k].v) || 0, steps = []; let run = 0;
+    const add = (l,v,k)=>{ steps.push({ l, a:run, b:run+v, k:k||(v>=0?'pos':'neg') }); run += v; };
+    const tot = (l)=> steps.push({ l, a:0, b:run, k:'tot' });
+    add('Mercato',g('mercato')); add('Cambio*',g('cambio')); add('Posizioni',g('posizioni')); tot('Lordo');
+    add('Commissioni*',-g('commissioni')); add('TER*',-g('ter')); add('Spread*',-g('spread')); add('Bollo',-g('bollo')); tot('Netto costi');
+    if(this.invTax){ add('Imposta*', -Math.max(0,run)*S.rate); tot('In tasca'); }
+    this._wf = steps;
+    const nm = { mercato:'Mercato', cambio:'Cambio', posizioni:'Posizioni (residuo)', commissioni:'Commissioni', ter:'TER', spread:'Spread', bollo:'Bollo' };
+    const calc = Object.keys(nm).filter(k=>d[k] && d[k].s==='calc').map(k=>nm[k]), est = Object.keys(nm).filter(k=>!(d[k] && d[k].s==='calc')).map(k=>nm[k]);
+    if(this.invTax) est.push('Imposta latente');
+    return `<div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;">
+        ${keys.map(k=>`<button class="btn ${k===this.invPeriod?'':'ghost'} small" aria-pressed="${k===this.invPeriod}" onclick="App.invPeriod='${k}'; App.render()">${this.esc(k)}</button>`).join('')}
+        <label class="rec-toggle" style="margin-left:auto;"><input type="checkbox" ${this.invTax?'checked':''} onchange="App.invTax=this.checked; App.render()"> Imposta latente</label>
+      </div>
+      <div class="stat-sub" style="margin-bottom:8px;"><span style="color:#2E7D4F;">■</span> contributo positivo &nbsp; <span style="color:#C0392B;">■</span> costo, imposta o contributo negativo &nbsp; <span style="color:#2F6DB5;">■</span> totale intermedio</div><div class="chart-wrap" style="height:${Math.max(340, steps.length*40)}px;"><canvas id="chart-wf" role="img" aria-label="Grafico a cascata: dal rendimento lordo a quello netto"></canvas></div>
+      <div class="label-note" style="padding-left:2px;"><strong>Calcolati:</strong> ${calc.join(', ')||'—'}. <strong>Stimati (*):</strong> ${est.join(', ')}. Posizioni è un residuo: assorbe gli errori di benchmark e cambio. L'imposta latente usa l'aliquota media ponderata (26% / 12,5% sulla quota titoli di Stato) applicata al netto del periodo, come se vendessi oggi.</div>`;
+  },
+  invMountCharts(S){
+    const I = this.inv, tick = { color:'#4A443A', font:{ family:'IBM Plex Mono', size:11 } };
+    const sc = { x:{ ticks:{ ...tick, maxTicksLimit:8 }, grid:{ display:false } }, y:{ ticks:{ ...tick, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.08)' } } };
+    const ser = I.series || [];
+    const cbOf = (p)=> Number.isFinite(p.cb) ? p.cb : p.inv, rlOf = (p)=> p.rl||0, sg = (v)=> (v>=0?'+':'−')+fmtEUR.format(Math.abs(v)), hasRl = ser.some(p=>Math.abs(rlOf(p))>0.004);
+    const GREEN='#2E7D4F', RED='#C0392B', INK='#211D16';
+    const lbl = (d,i)=> i===0 ? 'Inizio' : MESI_ABBR[parseInt(d.slice(5,7),10)-1] + " '" + d.slice(2,4), last = ser.length-1;
+    const endLbl = { display:(c)=> c.dataIndex===last, anchor:'end', align:'top', offset:6, font:{ family:'IBM Plex Mono', size:12, weight:700 }, formatter:(v)=> fmtEUR0.format(v) };
+    const legend = { position:'top', labels:{ color:INK, font:{ family:'Inter', size:12, weight:600 }, boxWidth:14 } };
+    const sc2 = { x:{ ticks:{ ...tick, maxRotation:0 }, grid:{ display:false } }, y:{ ticks:{ ...tick, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.10)' } } };
+    if(ser.length > 1){
+      const fl = (I.flows||[]).filter(f=>f.d && Number.isFinite(f.a));
+      const inP = (f,p,i)=> f.d<=p.d && (i===0 || f.d>ser[i-1].d);
+      const buysAll = ser.map((p,i)=>{ const v = fl.length ? fl.filter(f=>f.a>0 && inP(f,p,i)).reduce((x,f)=>x+f.a,0) : (i===0 ? p.inv : p.inv-ser[i-1].inv); return v>0.005 ? v : 0; });
+      const sellsAll = ser.map((p,i)=> fl.filter(f=>f.a<0 && inP(f,p,i)).reduce((x,f)=>x-f.a,0));
+      const auto = this.invParams.auto!==false, rng = this.invParams.range || '12';
+      const narrow = window.innerWidth<=860, padR = narrow ? 104 : 130, YW = 76, invOf = (p)=> Number.isFinite(p.inv) ? p.inv : cbOf(p), sg0 = (v)=> (v>=0?'+':'−')+fmtEUR0.format(Math.abs(v));
+      const bw = document.getElementById('chart-invbars'), availW = Math.max(200, ((bw && bw.parentElement.clientWidth) || (window.innerWidth-60)) - padR - YW);
+      const nM = new Set(ser.map(p=>p.d.slice(0,7))).size;
+      let gran = 'm';
+      if(auto){ const pm = availW/nM; gran = pm>=40 ? 'm' : (pm>=22 ? 'q' : 'y'); }
+      const qOf = (d)=> Math.floor((parseInt(d.slice(5,7),10)-1)/3)+1;
+      const keyOf = (d)=> gran==='m' ? d.slice(0,7) : (gran==='q' ? d.slice(0,4)+'Q'+qOf(d) : d.slice(0,4));
+      let groups = [];
+      ser.forEach((p,i)=>{ const k = keyOf(p.d), g = groups[groups.length-1]; if(g && g.k===k){ g.last = i; g.buy += buysAll[i]; g.sell += sellsAll[i]; } else groups.push({ k, last:i, buy:buysAll[i], sell:sellsAll[i] }); });
+      if(!auto && rng!=='max') groups = groups.slice(-parseInt(rng,10));
+      const pts = groups.map(g=>ser[g.last]), buys = groups.map(g=>g.buy>0.005?g.buy:0), sells = groups.map(g=>g.sell>0.005?g.sell:0), lastG = pts.length-1;
+      const labels = pts.map(p=> gran==='y' ? p.d.slice(0,4) : (gran==='q' ? 'T'+qOf(p.d)+" '"+p.d.slice(2,4) : MESI_ABBR[parseInt(p.d.slice(5,7),10)-1]+" '"+p.d.slice(2,4)));
+      const ttl = (it)=>{ const i = it[0].dataIndex; return gran==='m' ? fmtDateIT(pts[i].d) : labels[i]+' · al '+fmtDateIT(pts[i].d); };
+      const maxBuy = Math.max(...buys, 0), maxSell = Math.max(...sells, 0), M = Math.max(maxBuy, maxSell, 1);
+      const full = availW/pts.length >= 70, fb = (v)=> full ? fmtEUR0.format(v) : App.compactEUR(v);
+      const gEl = document.getElementById('inv-gran'); if(gEl) gEl.textContent = auto ? 'barre '+({m:'mensili',q:'trimestrali',y:'annuali'})[gran]+(full?'':' · importi compatti') : '';
+      const endL = { ...endLbl, display:(c)=> c.dataIndex===lastG };
+      const lp = pts[lastG], gpL = lp.val-invOf(lp), gpPct = invOf(lp) ? gpL/invOf(lp)*100 : 0, gpCol = gpL>=0 ? GREEN : RED, pr = pts.length>36 ? 1.5 : 3;
+      this.mountChart('invts', 'chart-invts', { type:'line', data:{ labels, datasets:[
+        { label:'Totale investito', data: pts.map(invOf), borderColor:'#A97F3F', tension:0.15, pointRadius:pr, borderWidth:2.5, datalabels:{ ...endL, color:'#80601F', align:'bottom' } },
+        { label:'Valore', data: pts.map(p=>p.val), borderColor:GREEN, backgroundColor:'rgba(46,125,79,0.18)', fill:'-1', tension:0.15, pointRadius:pr, borderWidth:3,
+          datalabels:{ labels:{
+            v:{ ...endL, color:GREEN },
+            gp:{ display:(c)=> c.dataIndex===lastG, anchor:'end', align:'right', offset:10, clamp:false, textAlign:'center', color:'#FBF8F0', backgroundColor:gpCol, borderRadius:5, padding:{ top:4, bottom:4, left:7, right:7 }, font:{ family:'IBM Plex Mono', size:12, weight:700 }, formatter:()=> sg0(gpL)+'\n'+fmtPct(gpPct) }
+          } } }
+      ] }, options:{ responsive:true, maintainAspectRatio:false, layout:{ padding:{ right:padR, top:18 } }, interaction:{ mode:'index', intersect:false },
+        plugins:{ legend, tooltip:{ callbacks:{ title:ttl, label:(c)=> `${c.dataset.label}: ${fmtEUR.format(c.parsed.y)}`, afterBody:(it)=>{ const p = pts[it[0].dataIndex], un = p.val-cbOf(p), rl = rlOf(p); return [`Non realizzato: ${sg(un)}`, `Realizzato: ${sg(rl)}`, `Totale G/P: ${sg(p.val-invOf(p))}`, `Costi cumulati: ${fmtEUR.format(p.ct||0)}`]; } } } },
+        scales:{ x:{ ticks:{ display:false }, grid:{ color:'rgba(33,29,22,0.06)' } }, y:{ afterFit:(sc)=>{ sc.width = YW; }, ticks:{ ...tick, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.10)' } } } } });
+      const row = (col, off)=>({ display:(c)=> c.dataset.data[c.dataIndex]>0, anchor:'start', align:'bottom', offset:off, clamp:false, color:col, font:{ family:'IBM Plex Mono', size:11, weight:700 } });
+      this.mountChart('invbars', 'chart-invbars', { type:'bar', data:{ labels, datasets:[
+        { label:'Versamenti', data:buys, backgroundColor:'rgba(169,127,63,0.75)', borderColor:'#A97F3F', borderWidth:1, borderRadius:3, barPercentage:0.9, categoryPercentage:0.8, datalabels:{ ...row('#80601F', 4), formatter:(v)=> '+'+fb(v) } },
+        ...(maxSell>0 ? [{ label:'Vendite ETF', data:sells, backgroundColor:'rgba(192,57,43,0.7)', borderColor:'#C0392B', borderWidth:1, borderRadius:3, barPercentage:0.9, categoryPercentage:0.8, datalabels:{ ...row('#C0392B', 21), formatter:(v)=> '−'+fb(v) } }] : [])
+      ] }, options:{ responsive:true, maintainAspectRatio:false, layout:{ padding:{ right:padR, top:8 } }, interaction:{ mode:'index', intersect:false },
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ title:ttl, label:(c)=> `${c.dataset.label}: ${fmtEUR.format(c.parsed.y)}` } } },
+        scales:{ x:{ ticks:{ ...tick, maxRotation:0 }, grid:{ display:false } }, y:{ min:-M*0.42, max:M*1.12, afterFit:(sc)=>{ sc.width = YW; }, ticks:{ callback:()=>'' }, grid:{ display:false }, border:{ display:false } } } } });
+    }
+    const rbn = this.invRebalance(S), tpc = this.invParams.posc || {};
+    const ys0 = { min:0, grace:'14%', ticks:{ ...tick, callback:(v)=>v+'%' }, grid:{ color:'rgba(33,29,22,0.10)' } };
+    const xs0 = { ticks:{ color:INK, font:{ family:'Inter', size:12.5, weight:700 } }, grid:{ display:false } };
+    const pc = (v)=> v.toFixed(1).replace('.',','), eur = (e)=> (e>=0?'+':'−')+fmtEUR0.format(Math.abs(e));
+    this.mountChart('alloc', 'chart-alloc', { type:'bar', data:{ labels: rbn.rows.map(r=>r.c), datasets:[
+      { label:'Range ammesso', data: rbn.rows.map(r=>[r.lo,r.hi]), backgroundColor:'rgba(95,122,103,0.30)', barPercentage:0.95, categoryPercentage:0.7, grouped:false, order:3, datalabels:{ display:false } },
+      { label:'Attuale', data: rbn.rows.map(r=>[0,r.cur]), backgroundColor: rbn.rows.map(r=> r.out==='ok'?GREEN:RED), barPercentage:0.5, categoryPercentage:0.7, grouped:false, order:2,
+        datalabels:{ display:true, anchor:'end', align:'end', clamp:true, offset:4, textAlign:'center', backgroundColor:'rgba(251,248,240,0.92)', borderRadius:4, padding:3, font:{ family:'IBM Plex Mono', size:12, weight:700 }, color:(c)=> rbn.rows[c.dataIndex].out==='ok'?GREEN:RED,
+          formatter:(v,c)=>{ const r = rbn.rows[c.dataIndex]; return pc(r.cur)+'%\n'+eur(S.byCls[r.c].value - r.t/100*S.tot); } } },
+      { label:'Desiderata', data: rbn.rows.map(r=>[Math.max(0,r.t-0.5), r.t+0.5]), backgroundColor:INK, barPercentage:0.95, categoryPercentage:0.7, grouped:false, order:1, datalabels:{ display:false } }
+    ] }, options:{ responsive:true, maintainAspectRatio:false, layout:{ padding:{ top:40 } },
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c)=>{ const r = rbn.rows[c.dataIndex]; return c.dataset.label==='Attuale' ? `Attuale: ${pc(r.cur)}% (${eur(S.byCls[r.c].value - r.t/100*S.tot)})` : (c.dataset.label==='Desiderata' ? `Desiderata: ${pc(r.t)}%` : `Range ammesso: ${pc(r.lo)}–${pc(r.hi)}%`); } } } },
+      scales:{ x:xs0, y:ys0 } } });
+    if(Object.keys(tpc).length){
+      const PP = S.P.slice().sort((a,b)=> this.CLS.indexOf(a.cls)-this.CLS.indexOf(b.cls) || b.value-a.value), sh = (p)=> S.tot ? p.value/S.tot*100 : 0, tgc = (c)=> (rbn.rows.find(r=>r.c===c)||{t:0}).t;
+      const dl = { display:true, anchor:'end', align:'end', clamp:true, offset:3, font:{ family:'IBM Plex Mono', size:11.5, weight:700 }, color:INK, textAlign:'center', formatter:(v)=> pc(v)+'%' };
+      const sf = this.invParams.shift/100, tgt = (p)=> tpc[p.isin]==null ? null : tpc[p.isin]*tgc(p.cls)/100, outOf = (p)=>{ const t = tgt(p); return t!=null && (sh(p) < t*(1-sf) || sh(p) > t*(1+sf)); };
+      this.mountChart('allocpos', 'chart-allocpos', { type:'bar', data:{ labels: PP.map(p=>p.ticker||p.short||p.name), datasets:[
+        { label:'Range ammesso', data: PP.map(p=>{ const t = tgt(p); return t==null ? null : [t*(1-sf), t*(1+sf)]; }), backgroundColor:'rgba(95,122,103,0.30)', barPercentage:0.95, categoryPercentage:0.8, grouped:false, order:3, datalabels:{ display:false } },
+        { label:'Attuale', data: PP.map(sh), backgroundColor: PP.map(p=>this.CLS_COL[p.cls]||'#6B6558'), borderRadius:3, barPercentage:0.5, categoryPercentage:0.8, grouped:false, order:2, datalabels:{ ...dl, color:(c)=>{ const p = PP[c.dataIndex]; return tgt(p)==null ? INK : (outOf(p) ? RED : GREEN); }, formatter:(v,c)=>{ const p = PP[c.dataIndex], t = tgt(p); return pc(v)+'%' + (t==null ? '' : '\n'+eur(p.value - t/100*S.tot)); } } },
+        { label:'Desiderata', data: PP.map(p=>{ const t = tgt(p); return t==null ? null : [Math.max(0,t-0.15), t+0.15]; }), backgroundColor:INK, barPercentage:0.95, categoryPercentage:0.8, grouped:false, order:1, datalabels:{ display:false } }
+      ] }, options:{ responsive:true, maintainAspectRatio:false, layout:{ padding:{ top:36 } },
+        plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c)=>{ const p = PP[c.dataIndex], t = tgt(p); return c.dataset.label==='Attuale' ? `Attuale: ${pc(sh(p))}%${t==null ? '' : ' ('+eur(p.value - t/100*S.tot)+')'}` : (t==null ? null : (c.dataset.label==='Desiderata' ? `Desiderata: ${pc(t)}%` : `Range ammesso: ${pc(t*(1-sf))}–${pc(t*(1+sf))}%`)); } } } },
+        scales:{ x:{ ...xs0, ticks:{ ...xs0.ticks, font:{ family:'IBM Plex Mono', size:11.5, weight:700 } } }, y:ys0 } } });
+    }
+    const w = this._wf;
+    if(w){
+      const GREEN='#2E7D4F', RED='#C0392B', BLUE='#2F6DB5', col = (s)=> s.k==='tot' ? BLUE : (s.k==='pos' ? GREEN : RED);
+      const amt = (s)=> s.k==='tot' ? fmtEUR.format(s.b) : (s.b-s.a>=0?'+':'−')+fmtEUR.format(Math.abs(s.b-s.a));
+      this.mountChart('wf', 'chart-wf', { type:'bar', data:{ labels: w.map(s=>s.l), datasets:[{
+        data: w.map(s=>[Math.min(s.a,s.b), Math.max(s.a,s.b)]), backgroundColor: w.map(col), borderRadius:3, barPercentage:0.72, categoryPercentage:0.92,
+        datalabels:{ display:true, anchor:'end', align:'end', clamp:true, offset:4, font:{ family:'IBM Plex Mono', size:12.5, weight:700 },
+          color:(c)=> col(w[c.dataIndex]), formatter:(v,c)=> amt(w[c.dataIndex]) } }] },
+        options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false, layout:{ padding:{ right:96 } },
+          plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:(c)=> amt(w[c.dataIndex]) } } },
+          scales:{ x:{ grace:'8%', ticks:{ ...tick, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.08)' } },
+                   y:{ ticks:{ color:'#211D16', font:{ family:'Inter', size:12.5, weight:600 } }, grid:{ display:false } } } } });
+    }
+    const Gl = this._goal;
+    if(Gl && document.getElementById('chart-goal')){
+      const gs = (I.asOf || localYmd(new Date())).slice(0,7), gc = ['#2F6DB5','#A97F3F','#2E7D4F'], gn = ['Prudente','Base','Ottimista'];
+      this.mountChart('goal', 'chart-goal', { type:'line', data:{ labels: Gl.scen[0].path.map((_,i)=> this.monthLabelShort(addMonthsToYm(gs,i))), datasets:[
+        ...Gl.scen.map((sc,i)=>({ label:`${gn[i]} ${String(sc.r).replace('.',',')}%`, data:sc.path, borderColor:gc[i], tension:0.15, pointRadius:0, borderWidth:2.5 })),
+        { label:'Obiettivo', data:new Array(Gl.n+1).fill(Gl.goal), borderColor:INK, borderDash:[6,4], borderWidth:1.5, pointRadius:0, fill:false }
+      ] }, options:{ responsive:true, maintainAspectRatio:false, interaction:{ mode:'index', intersect:false },
+        plugins:{ legend, tooltip:{ callbacks:{ label:(c)=> `${c.dataset.label}: ${fmtEUR.format(c.parsed.y)}` } } },
+        scales:{ x:{ ticks:{ ...tick, maxTicksLimit:8, maxRotation:0 }, grid:{ display:false } }, y:{ ticks:{ ...tick, callback:(v)=>fmtEUR0.format(v) }, grid:{ color:'rgba(33,29,22,0.08)' } } } } });
     }
   },
+  setInvComp(k){ this.invCompSel = k; this.render(); },
+  setInvAuto(v){ this.invParams.auto = !!v; this.saveData(); this.render(); },
+  setInvRange(k){ this.invParams.range = k; this.saveData(); this.render(); },
+  importInvFile(file){
+    if(!file) return;
+    const r = new FileReader();
+    r.onload = (e)=>{
+      try{
+        let d = JSON.parse(e.target.result); if(d && d.inv) d = d.inv;
+        if(!d || !Array.isArray(d.positions) || !d.positions.length) throw new Error('Formato non valido');
+        d.positions.forEach(p=>{ ['cost','value'].forEach(k=>{ p[k] = Number(p[k]); if(!Number.isFinite(p[k])) throw new Error('Importo non valido: '+p.name); }); });
+        this.inv = d; this.invPeriod = ''; this.ensureScalableWallet(); this.saveData(); this.render();
+        this.showToast(`Investimenti aggiornati: ${d.positions.length} ETF al ${fmtDateIT(d.asOf||'')}.`);
+      }catch(err){ console.error(err); this.showToast('File non valido: serve il backup investimenti generato in chat.'); }
+    };
+    r.readAsText(file);
+  },
+  renderInvestments(){
+    const main = document.getElementById('main'), S = this.invStats(), I = this.inv, q = this.invParams;
+    const head = `<div class="page-head"><div class="eyebrow">Investimenti</div><h1 class="page-title">Portafoglio Scalable</h1>
+      <div class="page-desc">${I ? `Dati al ${fmtDateIT(I.asOf||'')} · regime fiscale ${this.esc(I.regime||'—')}. Tutto proviene dal backup investimenti generato in chat col connettore Scalable; a mano restano solo allocazione desiderata, shift e PAC.` : 'Nessun dato ancora: carica il backup investimenti in fondo alla pagina.'}</div></div>`;
+    const inp = (lab, k, val, sub)=> `<div class="field-row"><label>${lab} <span class="stat-sub">${sub||''}</span></label><input class="mono" aria-label="${lab}" value="${String(val).replace('.',',')}" onchange="App.setInvParam('${k}', this.value)"></div>`;
+    const par = `<div class="section-title"><span>Parametri</span><span class="rule"></span></div><div class="card">
+      ${inp('Azionario (%)','az',q.az,'· sulla parte non alternativa')}
+      <div class="field-row"><label>Obbligazionario (%) <span class="stat-sub">· il resto</span></label><span class="mono">${Math.max(0,100-q.az)}</span></div>
+      ${inp('Alternativi desiderati (%)','alt',q.alt,'· sottratti in proporzione ad azionario e obbligazionario')}
+      <div class="field-row"><label><strong>Target effettivo sul portafoglio</strong></label><span class="mono">${(()=>{ const t = this.invClassTargets(), f = (v)=> String(v).replace('.',','); return `Azionario ${f(t.Azionario)}% · Obbligazionario ${f(t.Obbligazionario)}% · Alternativi ${f(t.Alternativi)}%`; })()}</span></div>
+      <div class="label-note" style="padding-left:2px;">I target dei singoli ETF si impostano nella tabella delle posizioni, in % del proprio comparto (ogni comparto deve sommare 100%).</div>${inp('Shift massimo (%)','shift',q.shift,'· relativo al target: 60% con shift 25% → range 45–75%')}
+      <div class="field-row"><label><strong>PAC mensile (€)</strong> <span class="stat-sub">· usato anche dalla previsione di liquidità</span></label><input class="mono" aria-label="PAC mensile (euro)" value="${this.investAmount ? String(this.investAmount).replace('.',',') : ''}" placeholder="0" onchange="App.setInvestAmount(this.value)"></div></div>`;
+    const imp = `<div class="section-title"><span>Aggiorna dati</span><span class="rule"></span></div><div class="card">
+      <p class="stat-sub" style="margin-bottom:10px;">Carica il backup investimenti generato in chat con Claude: aggiorna solo questa pagina. Anagrafica ETF (TER, geografia, settori, aziende): ${I && I.anagAsOf ? 'aggiornata al '+fmtDateIT(I.anagAsOf)+((Date.now()-new Date(I.anagAsOf).getTime())>90*864e5 ? ' — <strong style="color:var(--brick);">più vecchia di 90 giorni, chiedi un aggiornamento</strong>' : '') : 'non presente'}.</p>
+      <label class="btn ghost small" style="display:inline-block;">⇧ Carica backup investimenti<input type="file" accept=".json,application/json" id="file-input-inv" style="display:none;"></label></div>`;
+    const wire = ()=>{ const f = document.getElementById('file-input-inv'); if(f) f.addEventListener('change', (e)=>{ if(e.target.files.length) this.importInvFile(e.target.files[0]); e.target.value=''; }); };
+    if(!S){ main.innerHTML = head + par + imp; wire(); return; }
+    const gp = S.tot - S.cost, rb = this.invRebalance(S), pct = (v,b)=> b ? fmtPct((v-b)/b*100) : '—';
+    const mx = (I.periods && I.periods.MAX) || null, gm = (k)=> (mx && mx[k]) ? mx[k].v : 0;
+    const cst = mx ? [['Commissioni',gm('commissioni')],['Spread (solo ETP)',gm('spread')],['TER maturato',gm('ter')],['Bollo maturato',gm('bollo')]]
+      : [['Commissioni',S.P.reduce((x,p)=>x+(p.fees||0),0)+(I.extraFees||0)],['Spread (solo ETP)',S.P.reduce((x,p)=>x+(p.spreadPaid||0),0)],['TER annuo',S.annual],['Bollo annuo',S.tot*0.002]];
+    const cTot = cst.reduce((x,r)=>x+r[1],0), xr = this.invXirr(S), tw = this.invTwr();
+    const fl0 = (I.flows||[]).filter(f=>Number.isFinite(f.a)), ser0 = I.series||[], invAuto = this.invParams.auto!==false, invRng = this.invParams.range || '12', ctL = ser0.length ? (ser0[ser0.length-1].ct||0) : 0, tInv = fl0.length ? fl0.reduce((x,f)=>x+f.a,0) : (ser0.length && Number.isFinite(ser0[ser0.length-1].inv) ? ser0[ser0.length-1].inv : S.cost);
+    const costGrid = `<div class="cost-grid"><span class="ch">ETF</span><span class="ch num">Già pagati</span><span class="ch num">TER annuo</span>${S.P.slice().sort((a,b)=>b.value-a.value).map(p=>`<span class="cn" title="${this.esc(p.short||p.name)}"><strong class="mono">${this.esc(p.ticker||p.short||p.name)}</strong></span><span class="mono num">${fmtEUR.format((p.fees||0)+(p.spreadPaid||0))}</span><span class="mono num">${fmtEUR.format(p.value*(this.terOf(p)||0)/100)}</span>`).join('')}</div>`;
+    const cards = `<div class="grid grid-3 inv-cards">
+      <div class="card inv-split">
+        <div><div class="stat-label">Valore</div><div class="stat-value mono">${fmtEUR.format(S.tot)}</div></div>
+        <div><div class="stat-label">In investimento</div><div class="stat-value mono">${fmtEUR.format(S.cost)}</div></div>
+        <div title="Somma netta dei soldi versati verso gli ETF (versamenti meno vendite)"><div class="stat-label">Totale investito</div><div class="stat-value mono">${fmtEUR.format(tInv)}</div></div>
+      </div>
+      <div class="card inv-split">
+        <div><div class="stat-label">Guadagno / perdita</div><div class="stat-value mono" style="color:${gp>=0?'var(--sage)':'var(--brick)'}">${gp>=0?'+':'−'}${fmtEUR.format(Math.abs(gp))}</div><div class="stat-sub">${pct(S.tot,S.cost)}</div>${Math.abs(S.realized)>0.004 ? `<div class="stat-sub">Con realizzati: <strong class="mono">${(gp+S.realized>=0?'+':'−')+fmtEUR.format(Math.abs(gp+S.realized))}</strong></div>` : ''}</div>
+        <div><div class="stat-label">Rendimento · TWR</div><div class="stat-value mono" style="color:${tw && tw.v<0 ? 'var(--brick)' : 'var(--sage)'}">${tw ? fmtPct(tw.v*100) : '—'}</div><div class="stat-sub">${tw ? 'non annualizzato · su '+tw.months.toFixed(1).replace('.',',')+' mesi · senza l\'effetto di quando versi' : 'serie storica non presente nel backup'}</div>${tw && tw.weak ? `<div class="stat-sub">Stima mensile: ${tw.weak} ${tw.weak===1?'mese ha':'mesi hanno'} versamenti maggiori del capitale di partenza, quindi la precisione è ridotta. Il G/P % è rapportato a quanto hai versato, il TWR no: i due numeri possono divergere.</div>` : ''}${xr ? `<div class="stat-sub">XIRR annualizzato: <strong class="mono">${fmtPct(xr.v*100)}</strong>${xr.months<12 ? ' · storico breve, stima instabile' : ''}</div>` : ''}</div>
+      </div>
+      <div class="card inv-split"><div><details class="year-detail" ${this.costOpen?'open':''} ontoggle="App.costOpen=this.open"><summary><div class="stat-label">Costi totali${mx ? ' · dall\'inizio' : ''}</div><div class="stat-value mono brick">${fmtEUR.format(cTot)}</div><div class="stat-sub">clicca per i dettagli <span class="caret">▸</span></div></summary>
+      <div style="margin-top:12px; padding-top:10px; border-top:1px dashed var(--line-strong);">
+        ${cst.map(r=>`<div class="ydb-row"><span>${r[0]}</span><span class="mono">${fmtEUR.format(r[1])}</span></div>`).join('')}
+        <div class="stat-sub" style="margin-top:8px;">Costo annuo a regime (TER + bollo): <strong class="mono">${fmtEUR.format(S.annual+S.tot*0.002)}</strong> · ${((S.annual/S.tot+0.002)*100).toFixed(2).replace('.',',')}% del valore${S.P.some(p=>this.terOf(p)==null) ? ' · TER mancante per '+S.P.filter(p=>this.terOf(p)==null).length+' ETF' : ''}</div>
+        <div class="stat-label" style="margin:14px 0 8px;">Per ETF</div>
+        ${costGrid}
+        ${I.extraFees ? `<div class="ydb-row" style="margin-top:8px;"><span>Vendite di frazioni (commissioni)</span><span class="mono">${fmtEUR.format(I.extraFees)}</span></div>` : ''}
+      </div></details></div>
+      <div title="Differenza tra incassi delle vendite e costo dei titoli venduti (FIFO). Non è inclusa nel totale dei costi."><div class="stat-label">${S.realized>0.004?'Profitti realizzati':'Perdite realizzate'}</div><div class="stat-value mono" style="color:${S.realized>0.004?'var(--sage)':(S.realized<-0.004?'var(--brick)':'var(--green)')}">${Math.abs(S.realized)<=0.004 ? fmtEUR.format(0) : (S.realized>0?'+':'−')+fmtEUR.format(Math.abs(S.realized))}</div></div></div></div>`;
+    const TG = this.invClassTargets();
+    const classTable = (c)=>{
+      const b = S.byCls[c]; if(!b.pos.length) return '';
+      const head = `<div style="display:flex; align-items:baseline; gap:8px 20px; flex-wrap:wrap; padding:6px 0;"><strong class="display" style="font-size:22px; color:${this.CLS_COL[c]||'var(--ink)'}">${this.esc(c)}</strong><span class="mono" style="font-size:17px; font-weight:600;">${fmtEUR.format(b.value)}</span><span class="mono" style="font-size:17px; font-weight:600;">${(b.value/S.tot*100).toFixed(1).replace('.',',')}%</span><span class="mono" style="font-size:17px; font-weight:700; color:${b.value>=b.cost?'#2E7D4F':'#C0392B'};">${b.value>=b.cost?'+':'−'}${fmtEUR0.format(Math.abs(b.value-b.cost))} · ${pct(b.value,b.cost)}</span></div>`;
+      const body = `<div class="stat-label" style="margin:16px 0 6px; color:${this.CLS_COL[c]||'var(--ink)'};">${this.esc(c)}</div><div class="table-scroll"><table class="inv-table pos-table"><thead><tr><th>ETF</th><th class="num">Investito</th><th class="num">Valore</th><th class="num">G/P</th><th class="num">Peso ptf</th><th class="num">Target ptf</th><th class="num">Target comparto</th><th class="num">Scarto ptf</th><th class="num">TER</th><th class="num">Costo/anno</th></tr></thead><tbody>
+      ${b.pos.slice().sort((x,y)=>y.value-x.value).map(p=>{ const cw = p.value/S.tot*100, tv = (this.invParams.posc||{})[p.isin], tgp = tv==null ? null : tv*TG[c]/100, te = tgp==null ? null : tgp/100*S.tot, dv = te==null ? null : p.value-te, ok = dv!==null && Math.abs(dv) <= te*this.invParams.shift/100, tr = this.terOf(p);
+        return `<tr><td><strong class="mono">${this.esc(p.ticker||p.short||p.name)}</strong></td><td class="num mono">${fmtEUR.format(p.cost)}</td><td class="num mono">${fmtEUR.format(p.value)}</td><td class="num mono ${p.value>=p.cost?'gain-pos':'gain-neg'}">${(p.value>=p.cost?'+':'−')+fmtEUR.format(Math.abs(p.value-p.cost))}<div>${pct(p.value,p.cost)}</div></td><td class="num mono">${cw.toFixed(1).replace('.',',')}%</td><td class="num mono">${tgp==null?'—':tgp.toFixed(1).replace('.',',')+'%'}</td><td class="num"><input class="mono" aria-label="Target ${this.esc(p.ticker||p.short||p.name)} (percentuale del comparto)" placeholder="—" value="${tv==null?'':String(tv).replace('.',',')}" onchange="App.setInvTarget('${p.isin}', this.value)"></td><td class="num mono ${dv===null?'':(ok?'gain-pos':'gain-neg')}" title="Scarto rispetto al target sull'intero portafoglio: positivo = sopra, negativo = sotto">${dv===null?'—':(dv>=0?'+':'−')+fmtEUR0.format(Math.abs(dv))}</td><td class="num mono">${p.ter!=null ? String(p.ter).replace('.',',')+'%' : `<input class="mono" aria-label="TER ${this.esc(p.ticker||p.short||p.name)} (percentuale)" placeholder="TER %" value="${tr==null?'':String(tr).replace('.',',')}" onchange="App.setInvTer('${p.isin}', this.value)">`}</td><td class="num mono">${fmtEUR.format(p.value*(tr||0)/100)}</td></tr>`; }).join('')}
+      </tbody></table></div>${(()=>{ const tpp = this.invParams.posc||{}, ps = b.pos.filter(p=>tpp[p.isin]!=null); if(!ps.length) return ''; const sm = ps.reduce((x,p)=>x+tpp[p.isin],0), okS = Math.abs(sm-100)<=0.5 && ps.length===b.pos.length; return `<div class="stat-sub" style="margin-top:8px;">Target ETF del comparto: <span class="rb-badge ${okS?'ok':'out'}">${sm.toFixed(1).replace('.',',')}%</span>${okS?'':' · devono sommare 100% e ogni ETF del comparto ha bisogno del suo target'}</div>`; })()}`;
+      return { head, body };
+    };
+    const posParts = this.CLS.map(classTable).filter(Boolean);
+    const posHTML = `<details class="card year-detail" ${this.posOpen?'open':''} ontoggle="App.posOpen=this.open"><summary><div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px 28px; flex-wrap:wrap;"><div style="min-width:0;">${posParts.map(x=>x.head).join('')}<div class="stat-sub" style="margin-top:6px;">tocca per i dettagli degli ETF <span class="caret">▸</span></div></div><div style="text-align:right;" title="Media dei TER degli ETF pesata sul valore di ciascuno"><div class="stat-label">TER ponderato annuo</div><div class="stat-value mono">${S.tot ? (S.annual/S.tot*100).toFixed(2).replace('.',',') : '0,00'}%</div><div class="stat-sub"><strong class="mono">${fmtEUR.format(S.annual)}</strong> all'anno${S.P.some(p=>this.terOf(p)==null) ? '<br>TER mancante per '+S.P.filter(p=>this.terOf(p)==null).length+' ETF' : ''}</div></div></div></summary><div style="margin-top:10px; padding-top:4px; border-top:1px dashed var(--line-strong);">${posParts.map(x=>x.body).join('')}</div></details>`;
+    const allocRows = rb.rows.map(r=>`<tr><td>${this.esc(r.c)}</td><td class="num mono">${r.cur.toFixed(1).replace('.',',')}%</td><td class="num mono">${String(r.t).replace('.',',')}%</td><td class="num mono">${((e)=> (e>=0?'+':'−')+fmtEUR0.format(Math.abs(e)))(S.byCls[r.c].value - r.t/100*S.tot)}</td><td class="num mono">${r.lo.toFixed(1).replace('.',',')}–${r.hi.toFixed(1).replace('.',',')}%</td><td class="num"><span class="rb-badge ${r.out==='ok'?'ok':'out'}">${r.out==='ok'?'nel range':'fuori: '+r.out}</span></td></tr>`).join('');
+    const compKinds = [['geo','Geografia'],['sector','Settori'],['top','Aziende'],['dur','Duration']];
+    const comp = this.invComp(S, this.invCompSel), cmax = Math.max(...comp.map(x=>x[1]), 1);
+    const hasComp = S.P.some(p=>p.geo || p.sector || p.top);
+    const tpc = this.invParams.posc || {}, hasT = Object.keys(tpc).length>0;
+    const sumWarn = this.CLS.map(c=>{ const all = S.byCls[c].pos, ps = all.filter(p=>tpc[p.isin]!=null); if(!ps.length) return ''; const sm = ps.reduce((x,p)=>x+tpc[p.isin],0); return (Math.abs(sm-100)>0.5 || ps.length<all.length) ? `<div class="planned-warning" style="margin-top:10px;">⚠ ${c}: i target degli ETF sommano ${sm.toFixed(1).replace('.',',')}%${ps.length<all.length ? ' e manca il target di qualche ETF' : ''}: devono fare 100%.</div>` : ''; }).join('');
+    const allocHead = `<div class="stat-sub" style="margin-bottom:8px;"><span style="color:#211D16;">▬</span> desiderata &nbsp; <span style="background:rgba(95,122,103,0.35); padding:0 9px;">&nbsp;</span> range ammesso (shift) &nbsp; <span style="color:#2E7D4F;">■</span> attuale nel range &nbsp; <span style="color:#C0392B;">■</span> attuale fuori range · sopra ogni barra: % attuale e scarto in € dal desiderato</div>
+      <div class="chart-wrap" style="height:380px;"><canvas id="chart-alloc" role="img" aria-label="Grafico: allocazione attuale, desiderata e range per classe"></canvas></div>
+      ${hasT ? `<div style="height:22px;"></div><div class="chart-wrap" style="height:360px;"><canvas id="chart-allocpos" role="img" aria-label="Grafico: allocazione attuale e desiderata per ETF, in percentuale dell'intero portafoglio"></canvas></div>` : '<div class="label-note" style="padding-left:2px;">Imposta il target di ogni ETF nella tabella delle posizioni per vedere il confronto anche per singolo ETF.</div>'}
+      ${sumWarn}
+      <div style="height:14px;"></div>`;
 
-  refreshInvTotals(){
-    const totalInvested = this.investments.reduce((s,i)=>s+i.invested,0);
-    const totalValue = this.investments.reduce((s,i)=>s+i.currentValue,0);
-    const gain = totalValue-totalInvested;
-    const gainPct = totalInvested ? (gain/totalInvested*100) : 0;
-    document.getElementById('inv-tot-invested').textContent = fmtEUR.format(totalInvested);
-    document.getElementById('inv-tot-value').textContent = fmtEUR.format(totalValue);
-    const gEl = document.getElementById('inv-tot-gain');
-    gEl.textContent = (gain>=0?'+':'')+fmtEUR.format(gain);
-    gEl.className = 'stat-value mono';
-    gEl.style.color = gain>=0 ? 'var(--sage)' : 'var(--brick)';
-    document.getElementById('inv-tot-gainpct').innerHTML = `<strong style="color:${gain>=0?'var(--sage)':'var(--brick)'};">${fmtPct(gainPct)}</strong>${this.xirrHTML()}`;
-    const grossInvested = this.grossInvestedScalable();
-    const grossEl = document.getElementById('inv-tot-invested-gross');
-    if(grossEl && grossInvested!==null){
-      const costsGap = grossInvested-totalInvested;
-      grossEl.innerHTML = `Versato lordo (Scalable): <strong class="mono">${fmtEUR.format(grossInvested)}</strong>${Math.abs(costsGap)>=0.005 ? ` · Commissioni/Costi: <strong class="mono" style="color:var(--brick);">${fmtEUR.format(costsGap)}</strong>` : ''}`;
-    }
-    const aData = this.allocationData();
-    this.investments.forEach(inv=>{
-      const g = inv.currentValue - inv.invested;
-      const gp = inv.invested ? (g/inv.invested*100) : 0;
-      const d = this.etfDyn(inv, aData);
-      const cls = 'r mono ' + (g>=0?'gain-pos':'gain-neg');
-      const gE = document.getElementById('inv-gain-'+inv.id), gpE = document.getElementById('inv-gainpct-'+inv.id), wE = document.getElementById('inv-weight-'+inv.id), gbE = document.getElementById('inv-gainbox-'+inv.id);
-      if(gE) gE.textContent = (g>=0?'+':'')+fmtEUR0.format(g);
-      if(gpE) gpE.textContent = '('+fmtPct(gp)+')';
-      if(gbE) gbE.className = cls;
-      if(wE) wE.innerHTML = d.weight;
-      const setH = (pre, html)=>{ const el = document.getElementById(pre+inv.id); if(el) el.innerHTML = html; };
-      setH('inv-eff-', d.eff); setH('inv-range-', d.range); setH('inv-move-', d.move);
-      if(inv.assetClass) setH('inv-status-', d.status); // per gli ETF senza classe la cella contiene il menu di scelta: non si sovrascrive
-    });
-    ASSET_CLASSES.forEach(c=>{ const el = document.getElementById('inv-sec-info-'+c); if(el) el.innerHTML = this.etfSecInfoHTML(c); });
-    const allocEl = document.getElementById('inv-alloc');
-    if(allocEl) allocEl.innerHTML = this.allocationHTML();
-    const derEl = document.getElementById('inv-alloc-derived');
-    if(derEl) derEl.innerHTML = this.allocDerivedHTML();
-    const invCalcEl = document.getElementById('inv-invest-calc');
-    if(invCalcEl) invCalcEl.innerHTML = this.investCalcHTML();
-    const notesEl = document.getElementById('inv-etf-notes');
-    if(notesEl) notesEl.innerHTML = this.etfNotesHTML();
-    this.collapseLong();
-    const cd = this.allocChartData();
-    const pie = this.charts.allocPie;
-    if(pie){ pie.data.labels = cd.pieLabels; pie.data.datasets[0].data = cd.pieValues; pie.data.datasets[0].backgroundColor = cd.pieColors; pie.update(); }
-    const bar = this.charts.allocBar;
-    if(bar){ bar.data.datasets[0].data = cd.current; bar.data.datasets[1].data = cd.target; bar.update(); }
+    const pc = this.invPac(S), P1 = (v)=> v.toFixed(1).replace('.',',');
+    let pacBody;
+    if(!(pc.pac>0)) pacBody = '<div class="stat-sub">Inserisci il PAC mensile per vedere come ripartirlo tra gli ETF.</div>';
+    else if(!pc.complete) pacBody = '<div class="planned-warning">⚠ Per ripartire il PAC serve il target di ogni ETF (nella tabella delle posizioni): ogni comparto deve sommare 100%.</div>';
+    else if(!pc.ok) pacBody = `<div class="planned-warning">⚠ I target sull'intero portafoglio sommano ${P1(pc.sumT)}% invece di 100%: controlla i target degli ETF e le percentuali delle classi.</div>`;
+    else pacBody = `<div class="table-scroll"><table class="inv-table pos-table pac-table"><thead><tr><th>ETF</th><th class="num">Peso ptf</th><th class="num">Target ptf</th><th class="num">PAC normale</th><th class="num">PAC ribilanciante</th><th class="num">Peso dopo</th></tr></thead><tbody>
+      ${pc.rows.map(r=>`<tr><td><span style="color:${this.CLS_COL[r.p.cls]||'#6B6558'};">■</span> <strong class="mono">${this.esc(r.p.ticker||r.p.short||r.p.name)}</strong></td><td class="num mono">${P1(r.cur)}%</td><td class="num mono">${P1(r.t)}%</td><td class="num mono">${fmtEUR.format(r.simple)}</td><td class="num mono">${r.reb>=0.005 ? fmtEUR.format(r.reb) : '—'}</td><td class="num mono">${P1(r.after)}%</td></tr>`).join('')}
+      <tr><td><strong>Totale</strong></td><td></td><td class="num mono">100,0%</td><td class="num mono">${fmtEUR.format(pc.pac)}</td><td class="num mono">${fmtEUR.format(pc.pac)}</td><td></td></tr>
+      </tbody></table></div>
+      <div class="label-note" style="padding-left:2px;"><strong>PAC normale</strong>: il PAC ripartito secondo il target di ogni ETF sull'intero portafoglio. <strong>PAC ribilanciante</strong>: il PAC va solo agli ETF sotto target dopo il versamento (in proporzione al loro vuoto), senza vendere nulla; gli ETF sopra target restano a zero. <strong>Peso dopo</strong> si riferisce al PAC ribilanciante. Con un solo versamento il target può non essere raggiunto del tutto: lo scarto si chiude nel tempo con i versamenti successivi. Strumento educativo, non una raccomandazione.</div>`;
+    const pacHTML = `<div class="section-title"><span>PAC · quanto acquistare</span><span class="rule"></span></div><details class="card year-detail" ${this.pacOpen?'open':''} ontoggle="App.pacOpen=this.open"><summary><div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;"><div><div class="stat-label">Ripartizione del PAC</div><div class="stat-sub">tocca per aprire <span class="caret">▸</span></div></div><div class="stat-value mono" style="margin-top:0; font-size:22px;">${this.investAmount ? fmtEUR.format(this.investAmount) : '—'}</div></div></summary><div style="margin-top:12px; padding-top:10px; border-top:1px dashed var(--line-strong);">
+      <div class="field-row"><label><strong>PAC mensile (€)</strong></label><input class="mono" aria-label="PAC mensile per la ripartizione (euro)" value="${this.investAmount ? String(this.investAmount).replace('.',',') : ''}" placeholder="0" onchange="App.setInvestAmount(this.value)"></div>
+      ${pacBody}</div></details>`;
+    const G = this.invGoal(S); this._goal = G.ok ? G : null;
+    const gIn = (lab, k, val, sub)=> `<div class="field-row"><label>${lab} <span class="stat-sub">${sub||''}</span></label><input class="mono" aria-label="${lab}" value="${val ? String(val).replace('.',',') : ''}" placeholder="0" onchange="App.setInvGoal('${k}', this.value)"></div>`;
+    const gNames = ['Prudente','Base','Ottimista'], gStart = (I.asOf || localYmd(new Date())).slice(0,7);
+    const gDur = (m)=> m===0 ? 'già raggiunto' : (m==null ? 'oltre 100 anni' : ((Math.floor(m/12) ? Math.floor(m/12)+' anni ' : '') + (m%12 ? (m%12)+' mesi' : '')).trim() + ' · ' + this.monthLabel(addMonthsToYm(gStart, m)));
+    const goalBody = !G.ok ? '<div class="stat-sub" style="padding-top:8px;">Inserisci il capitale che vuoi raggiungere per vedere in quanto tempo ci arrivi con il tuo PAC e quale PAC servirebbe.</div>' : `
+      <div class="stat-sub" style="margin:10px 0 8px;">${G.custom ? 'Capitale di partenza' : 'Oggi'}: <strong class="mono">${fmtEUR0.format(G.V0)}</strong> = <strong class="mono">${P1(G.progress)}%</strong> dell'obiettivo · mancano <strong class="mono">${fmtEUR0.format(Math.max(0, G.goal-G.V0))}</strong></div>
+      <div class="label-bar-track" style="height:8px; margin-bottom:16px;"><div class="label-bar-fill" style="width:${Math.min(100,G.progress)}%; background:var(--brass);"></div></div>
+      <div class="table-scroll"><table class="inv-table"><thead><tr><th>Scenario</th><th class="num">Capitale tra ${G.yrs} ${G.yrs===1?'anno':'anni'} (lordo)</th><th class="num">Al netto imposta</th><th class="num">Obiettivo raggiunto tra</th><th class="num">PAC necessario in ${G.yrs} ${G.yrs===1?'anno':'anni'}</th></tr></thead><tbody>
+      ${G.scen.map((sc,i)=>`<tr><td><strong>${gNames[i]}</strong> <span class="stat-sub">${String(sc.r).replace('.',',')}% annuo</span></td><td class="num mono">${fmtEUR0.format(sc.end)}</td><td class="num mono">${fmtEUR0.format(sc.net)}</td><td class="num mono">${gDur(sc.reach)}</td><td class="num mono" style="color:${sc.need<=G.pac+0.5?'var(--sage)':'var(--brick)'};">${fmtEUR0.format(sc.need)}/mese</td></tr>`).join('')}
+      </tbody></table></div>
+      <div class="stat-label" style="margin:20px 0 6px;">Capitale nel tempo · tre scenari di rendimento e obiettivo (linea tratteggiata)</div>
+      <div class="chart-wrap tall"><canvas id="chart-goal" role="img" aria-label="Grafico: proiezione del capitale verso l'obiettivo in tre scenari"></canvas></div>
+      <div class="label-note" style="padding-left:2px;">Sono ipotesi, non previsioni: rendimento costante e non garantito, valori nominali (inflazione non considerata), PAC di ${fmtEUR0.format(G.pac)} versato a fine mese, partendo dal ${G.custom ? 'capitale di partenza che hai indicato (come costo fiscale per l\'imposta uso lo stesso importo)' : 'valore attuale'}. Gli scenari sono il rendimento che imposti ±2 punti. "Al netto imposta" applica l'aliquota media ponderata (${P1(S.rate*100)}%) alla plusvalenza a fine orizzonte, come se vendessi tutto; il tempo per raggiungere l'obiettivo è invece al lordo. Il TER è già dentro il rendimento netto del fondo che ipotizzi. In verde il PAC necessario se è già coperto dal tuo PAC attuale. Strumento educativo, non una raccomandazione.</div>`;
+    const goalHTML = `<div class="section-title"><span>Proiezione verso un obiettivo di capitale</span><span class="rule"></span></div><div class="card">
+      ${gIn('Obiettivo di capitale (€)','goal',this.invParams.goal,'')}
+      <div class="field-row"><label>Capitale di partenza (€) <span class="stat-sub">· vuoto = valore attuale del portafoglio</span></label><input class="mono" aria-label="Capitale di partenza (euro)" value="${this.invParams.goalStart ? String(this.invParams.goalStart).replace('.',',') : ''}" placeholder="${fmtEUR0.format(S.tot)}" onchange="App.setInvGoal('goalStart', this.value)"></div>
+      ${gIn('Rendimento annuo ipotetico (%)','goalRate',this.invParams.goalRate,'· scenario base, gli altri ±2 punti')}
+      ${gIn('Orizzonte (anni)','goalYears',this.invParams.goalYears,'· per capitale finale e PAC necessario')}
+      <div class="field-row"><label><strong>PAC mensile (€)</strong> <span class="stat-sub">· lo stesso del campo PAC</span></label><input class="mono" aria-label="PAC mensile per la proiezione (euro)" value="${this.investAmount ? String(this.investAmount).replace('.',',') : ''}" placeholder="0" onchange="App.setInvestAmount(this.value)"></div>
+      ${goalBody}</div>`;
+    main.innerHTML = head + cards + `
+      <div class="section-title"><span>Andamento</span><span class="rule"></span></div>
+      <div class="card">${(I.series||[]).length>1 ? `<div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:12px;">${['12','24','max'].map(k=>`<button class="btn ${(!invAuto && invRng===k)?'':'ghost'} small" ${invAuto?'disabled style="opacity:.45; cursor:default;"':''} aria-pressed="${!invAuto && invRng===k}" onclick="App.setInvRange('${k}')">${k==='max'?'Max':k+' mesi'}</button>`).join('')}<label class="rec-toggle" style="margin-left:6px; font-weight:700;" title="Adatta da solo il dettaglio (mensile, trimestrale, annuale) allo spazio disponibile"><input type="checkbox" ${invAuto?'checked':''} onchange="App.setInvAuto(this.checked)"> Auto</label><span class="stat-sub" id="inv-gran"></span></div><div class="stat-label" style="margin-bottom:6px;">Valore e totale investito · l'area verde è il guadagno complessivo (valore − investito)</div><div class="stat-sub" style="margin-bottom:10px;">Costi cumulati (commissioni, TER, spread, bollo): <strong class="mono brick">${fmtEUR.format(ctL)}</strong>${tInv>0 ? ' · '+(ctL/tInv*100).toFixed(2).replace('.',',')+'% del totale investito' : ''}</div><div class="stat-sub" style="margin-bottom:10px;"><span style="color:#A97F3F;">■</span> Versamenti &nbsp; <span style="color:#C0392B;">■</span> Vendite di ETF · importi sotto le barre del pannello in basso</div><div class="chart-wrap" style="height:${window.innerWidth<=860?380:480}px;"><canvas id="chart-invts" role="img" aria-label="Grafico: andamento di valore e totale investito"></canvas></div><div class="chart-wrap" style="height:230px; margin-top:-6px;"><canvas id="chart-invbars" role="img" aria-label="Grafico: versamenti e vendite di ETF mese per mese"></canvas></div>` : '<div class="stat-sub">Serie storica non presente nel backup.</div>'}</div>
+      <div class="section-title"><span>Posizioni per classe</span><span class="rule"></span></div>${posHTML}
+      <div class="section-title"><span>Allocazione vs desiderata</span><span class="rule"></span></div>
+      <div class="card">${allocHead}<div class="table-scroll"><table class="inv-table"><thead><tr><th>Classe</th><th class="num">Attuale</th><th class="num">Desiderata</th><th class="num">Scarto</th><th class="num">Range</th><th class="num">Stato</th></tr></thead><tbody>${allocRows}</tbody></table></div>
+      </div>
+      ${pacHTML}
+      <div class="section-title"><span>Composizione</span><span class="rule"></span></div>
+      <div class="card">${hasComp ? `<div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">${compKinds.map(([k,l])=>`<button class="btn ${k===this.invCompSel?'':'ghost'} small" aria-pressed="${k===this.invCompSel}" onclick="App.setInvComp('${k}')">${l}</button>`).join('')}</div>
+      ${this.invCompSel==='dur' ? this.invDurationHTML(S) : `<div class="rank-list">${comp.map(([n,v])=>`<div class="rank-row" style="cursor:default; grid-template-columns:minmax(120px,220px) 1fr 60px;"><span class="rank-name">${this.esc(n)}</span><span class="rank-bar"><span style="width:${v/cmax*100}%; background:var(--brass);"></span></span><span class="rank-amt">${v.toFixed(1).replace('.',',')}%</span></div>`).join('')}</div>
+      <div class="label-note" style="padding-left:2px;">Percentuali sull'intero portafoglio, ponderate per il peso di ogni ETF (look-through da factsheet). <strong>Copertura dati: ${(S.P.filter(p=>p[this.invCompSel] && (Array.isArray(p[this.invCompSel]) ? p[this.invCompSel].length : Object.keys(p[this.invCompSel]).length)).reduce((x,p)=>x+p.value,0)/S.tot*100).toFixed(0)}% del portafoglio</strong>: sotto il 100% le percentuali sono sottostimate.</div>`}` : '<div class="stat-sub">Anagrafica ETF non presente nel backup.</div>'}</div>
+      <div class="section-title"><span>Da dove viene il rendimento</span><span class="rule"></span></div>
+      <div class="card">${this.invWaterfall(S) || '<div class="stat-sub">Scomposizione per periodo non presente nel backup.</div>'}</div>` + goalHTML + par + imp;
+    wire();
+    this.invMountCharts(S);
   },
 
   /* ================= RENDER: IMPORT ================= */
   renderImport(){
     const main = document.getElementById('main');
     const bm = this.backupMeta;
-    const balanceRows = this.orderedWallets().map(w=>`
+    const balanceRows = this.orderedWallets().filter(w=>!this.useInvFor(w)).map(w=>`
       <div class="field-row">
         <label>${displayWalletName(w)}</label>
         <input class="mono" aria-label="Saldo di apertura ${this.esc(displayWalletName(w))}" value="${this.openingBalances[w]||0}" onchange="App.setOpeningBalance('${w.replace(/'/g,"\\'")}', this.value)">
@@ -4035,11 +3849,16 @@ const App = {
           <label>Ultimo backup eseguito</label>
           <span class="mono backup-val">${bm.exportName ? this.esc(bm.exportName)+' · '+fmtDateIT(bm.exportDate) : '—'}</span>
         </div>
+        <div class="field-row">
+          <label>Contenuto del backup da scaricare</label>
+          <span class="mono backup-val">${(()=>{ const n = this.transactions.length, last = this.transactions.reduce((m,t)=> t.dateStr>m ? t.dateStr : m, ''), I = this.inv, ni = I && Array.isArray(I.positions) ? I.positions.length : 0; return `Spendee: ${n ? n+' movimenti fino al '+fmtDateIT(last) : 'nessun movimento'} · Investimenti: ${ni ? ni+' ETF al '+fmtDateIT(I.asOf||'') : 'nessun dato'}`; })()}</span>
+        </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px;">
           <button class="btn ghost small" onclick="App.exportBackup()">⇩ Scarica backup (.json)</button>
           <label class="btn ghost small" style="display:inline-block;">⇧ Importa backup
             <input type="file" accept="application/json,.json" id="file-input-backup" style="display:none;">
           </label>
+          <button class="btn danger" onclick="App.resetData()">Reset Dati</button>
         </div>
       </div>
 
@@ -4110,6 +3929,28 @@ const App = {
     }
   },
 
+  resetData(){
+    this.askConfirm(
+      'Verranno cancellati tutti i dati della dashboard: movimenti, portafogli, saldi di apertura, pagamenti previsti, budget, obiettivi, dati e parametri della pagina Investimenti. L\'operazione non si può annullare: scarica prima un backup se ti serve.',
+      'Cancella tutto',
+      ()=>{
+        this.transactions = []; this.wallets = []; this.openingBalances = {}; this.operational = {}; this.totalIncludedWallets = {};
+        this.plannedPayments = {}; this.plannedSkips = {}; this.budgets = {}; this.lastCsvImport = null;
+        this.targetMonthsOperational = 2; this.targetMonthsEmergency = 6;
+        this.PLANNED_APPROX_TOL_PCT = 10; this.PLANNED_PROPOSAL_WINDOW_PCT = 50;
+        this.investAmount = 0; this.inv = null;
+        this.invParams = { az:60, alt:10, shift:25, goal:0, goalStart:0, goalRate:5, goalYears:10 };
+        this.invPeriod = ''; this.yearSel = {}; this.yearCtx = {}; this.yearlyActiveYear = null;
+        this._txv++;
+        try{ localStorage.removeItem(this.STORAGE_KEY); }catch(e){ console.warn('Reset: impossibile svuotare lo storage locale', e); }
+        this.renderSidebar();
+        this.navigate('import');
+        this.showToast('Tutti i dati sono stati cancellati.');
+      },
+      'Cancellare tutti i dati?'
+    );
+  },
+
   setOpeningBalance(wallet, value){
     const v = this.parseNum(value);
     this.openingBalances[wallet] = v;
@@ -4128,7 +3969,7 @@ document.addEventListener('click', (e)=>{
   if(el.classList.contains('cl-closed')) App._clOpen.delete(k); else App._clOpen.add(k);
 });
 document.addEventListener('toggle', (e)=>{ if(e.target && e.target.open) App.collapseLong(); }, true);
-(function(){ let w = window.innerWidth, t; window.addEventListener('resize', ()=>{ clearTimeout(t); t = setTimeout(()=>{ if(window.innerWidth!==w){ w = window.innerWidth; App.collapseLong(true); } }, 200); }); })();
+(function(){ let w = window.innerWidth, t; window.addEventListener('resize', ()=>{ clearTimeout(t); t = setTimeout(()=>{ if(window.innerWidth!==w){ w = window.innerWidth; App.collapseLong(true); if(App.route.page==='investments' && App.invParams.auto!==false) App.render(); } }, 200); }); })();
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>{ App.collapseLong(true); Object.values(App.charts).forEach(c=>{ try{ c.resize(); c.update('none'); }catch(e){} }); });
 document.addEventListener('keydown', (e)=>{ if(e.key==='Tab'){ App._tabAt = Date.now(); App._tabDir = e.shiftKey ? -1 : 1; } }, true);
 
